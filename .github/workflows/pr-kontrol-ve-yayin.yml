@@ -1,0 +1,72 @@
+name: "🏁 Git Grand Prix - PR Muayene ve GitHub Pages Yayınlama"
+
+on:
+  # 1) Herhangi bir grup Pull Request (PR) açtığında veya güncellediğinde çalışır
+  pull_request:
+    branches: [ "main" ]
+  # 2) Bir PR main dalına birleştirildiğinde (Merge) veya main'e push atıldığında çalışır
+  push:
+    branches: [ "main" ]
+  # 3) GitHub arayüzünden manuel tetiklemeye izin verir
+  workflow_dispatch:
+
+# GitHub Pages dağıtımı için gerekli izinler
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # =========================================================================
+  # İŞ 1: TEKNİK MUAYENE (CI - Sürekli Entegrasyon)
+  # Grupların gönderdiği JSON dosyalarında sözdizimi (virgül/tırnak) hatası
+  # olup olmadığını otomatik denetler.
+  # =========================================================================
+  teknik-muayene:
+    name: "🔧 Araç Teknik Muayenesi (JSON Kontrolü)"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Depo Kodunu İndir (Checkout)"
+        uses: actions/checkout@v4
+
+      - name: "🟢 Node.js Ortamını Hazırla"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: "🔍 Araç Dosyalarını Denetle (Nohut Dürüm Hakem Botu)"
+        run: node scripts/muayene-kontrol.js
+
+  # =========================================================================
+  # İŞ 2: GITHUB PAGES YAYINLAMA (CD - Sürekli Dağıtım)
+  # Sadece main dalına birleştirme (Merge) yapıldığında çalışır ve yarış
+  # platformunu saniyeler içinde canlı web adresinde günceller!
+  # =========================================================================
+  canliya-al:
+    name: "🚀 GitHub Pages Üzerinde Otomatik Yayınla"
+    needs: teknik-muayene
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: "📥 Güncel Yarış Kodunu İndir"
+        uses: actions/checkout@v4
+
+      - name: "⚙️ GitHub Pages Yapılandırması"
+        uses: actions/configure-pages@v5
+
+      - name: "📦 Yarış Dosyalarını Paketle"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: "🏁 GitHub Pages'te Yayınla"
+        id: deployment
+        uses: actions/deploy-pages@v4
+
