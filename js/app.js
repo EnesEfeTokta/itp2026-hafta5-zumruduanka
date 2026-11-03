@@ -236,7 +236,7 @@ function bildirimGoster(mesaj) {
 // GERÇEK ZAMANLI ATEŞ, KIVILCIM, ENERJİ KÜRELERİ VE ŞOK DALGASI (CANVAS)
 // =========================================================================
 const canvas = document.getElementById('phoenixCanvas');
-const ctx = canvas ? canvas.getContext('2d') : null;
+const canvasCtx = canvas ? canvas.getContext('2d') : null;
 
 let kivilcimlar = [];
 let enerjiKureleri = [];
@@ -345,6 +345,7 @@ function sinematikDogusAnimasyonuBaslat() {
 }
 
 function canvasDongusu() {
+  const ctx = canvasCtx;
   if (!ctx || !canvas) return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 

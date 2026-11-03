@@ -353,6 +353,7 @@ body.zen-mode .phoenix-footer-bar {
   font-weight: 900;
   background: linear-gradient(90deg, #fef08a, #fbbf24, #f97316, #fbbf24, #fef08a);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 12px rgba(249, 115, 22, 0.45));
 }
