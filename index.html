@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Git Grand Prix 🏁 | Hafta 5: Git, GitHub ve GitHub Actions (Nohut Dürüm)</title>
+  <meta name="description" content="Atatürk Üniversitesi İnternet Tabanlı Programlama Dersi 5. Hafta Sınıf İçi Uygulama Platformu - Nohut Dürüm Grubu" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Üst Bilgi Çubuğu (Ders & Sunum Künyesi) -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="brand-badge">
+        <span class="brand-icon">🏁</span>
+        <div>
+          <h1>GİT GRAND PRIX <span class="version-pill">Hafta 5 Canlı Uygulama</span></h1>
+          <p class="subtitle">Git, GitHub ve GitHub Actions ile İş Akışı Otomasyonu • <strong>Doç. Dr. Hamza POLAT</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="host-card" title="5. Hafta Sunum ve Uygulama Sorumlusu Grup">
+        <span class="host-emoji">🌯</span>
+        <div>
+          <div class="host-title">SUNUM & HAKEM HEYETİ: <strong>NOHUT DÜRÜM</strong></div>
+          <div class="host-members">Tamer Çelik • Faruk Tazeoğlu • Muayad Jumaah</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="status-pills">
+        <div class="status-pill" id="serverModeBadge" title="Çalışma Ortamı Durumu">
+          <span class="dot pulse-green" id="serverModeDot"></span>
+          <span id="serverModeText">Kontrol Ediliyor...</span>
+        </div>
+        <div class="status-pill" id="headerReadyCount">
+          <span>🏎️ Pistte: <strong id="readyCountText">0 / 10</strong> Grup</span>
+        </div>
+        <button class="btn btn-icon" id="soundToggleBtn" title="Ses Efektlerini Aç/Kapat">
+          🔊 Ses Açık
+        </button>
+        <button class="btn btn-outline" id="gitPullBtn" title="Uzak depodan (GitHub) son birleştirilen PR'ları çek (git pull)">
+          ⬇️ Git Pull
+        </button>
+        <button class="btn btn-primary" id="syncFilesBtn" title="araclar/*.json dosyalarını ve GitHub durumunu yeniden oku">
+          🔄 Yenile
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sistematik Ders Akışı Sekmeleri (Tık Tık İlerleyen Adımlar) -->
+  <nav class="step-nav" aria-label="Uygulama Aşamaları">
+    <button class="step-tab active" data-tab="tab-rehber">
+      <span class="step-num">1</span>
+      <div class="step-info">
+        <strong>Görev & Komut Üretici</strong>
+        <small>Her grup için 5 adımda tek PR rehberi</small>
+      </div>
+    </button>
+    <button class="step-tab" data-tab="tab-garaj">
+      <span class="step-num">2</span>
+      <div class="step-info">
+        <strong>Canlı Garaj & PR Lobisi</strong>
+        <small>10 grubun hazırlık ve CI durumu</small>
+      </div>
+    </button>
+    <button class="step-tab" data-tab="tab-yaris">
+      <span class="step-num">3</span>
+      <div class="step-info">
+        <strong>Git Grand Prix Pisti 🏁</strong>
+        <small>10 grup canlı şans yarışı ve spiker</small>
+      </div>
+    </button>
+    <button class="step-tab" data-tab="tab-egitim">
+      <span class="step-num">4</span>
+      <div class="step-info">
+        <strong>Canlı Git/CI & Hakem Paneli</strong>
+        <small>Conflict simülatörü, CI testi ve kontrol</small>
+      </div>
+    </button>
+  </nav>
+
+  <!-- ANA İÇERİK ALANI -->
+  <main class="main-container">
+
+    <!-- =================================================================== -->
+    <!-- SEKME 1: GÖREV REHBERİ & GRUBA ÖZEL KOMUT ÜRETİCİ                   -->
+    <!-- =================================================================== -->
+    <section id="tab-rehber" class="tab-panel active">
+      <div class="panel-grid-2">
+        <!-- Sol: Grup Seçimi ve Adım Adım Terminal Komutları -->
+        <div class="card">
+          <div class="card-header">
+            <h2>👨‍💻 1. Adım: Grubunu Seç ve 5 Adımda Tek PR Gönder!</h2>
+            <span class="badge badge-blue">Sıfır Çakışma (Branch) Mantığı</span>
+          </div>
+          <p class="card-desc">
+            Her gruptan <strong>1 temsilci</strong> kendi grubuna tıklasın. Aşağıdaki komutlar seçtiğiniz gruba göre <strong>otomatik hazırlanır</strong>. Kendi dalınızı (<code>branch</code>) açacağınız için diğer 9 grupla hiçbir çakışma (conflict) yaşamayacaksınız!
+          </p>
+
+          <!-- 10 Grup + Nohut Dürüm Demo Seçim Butonları -->
+          <div class="group-selector-label">Grubunuzu Seçin (10 Yarışçı Grup + Canlı Kodlama Demo):</div>
+          <div class="group-selector-grid" id="groupSelectorButtons">
+            <!-- JS ile doldurulur -->
+          </div>
+
+          <!-- Seçilen Grubun Bilgi Kartı -->
+          <div class="selected-group-banner" id="selectedGroupBanner">
+            <!-- JS ile doldurulur -->
+          </div>
+
+          <!-- 5 Adımlık Kopyalanabilir Komut Listesi -->
+          <div class="steps-timeline" id="commandTimeline">
+            <!-- JS ile doldurulur -->
+          </div>
+        </div>
+
+        <!-- Sağ: İnteraktif JSON Hazırlayıcı (Hatasız Kod Üretici) -->
+        <div class="card">
+          <div class="card-header">
+            <h2>🎨 2. Adım: Aracını Tasarla & JSON Kodunu Hazırla</h2>
+            <span class="badge badge-green">GitHub Actions Uyumlu</span>
+          </div>
+          <p class="card-desc">
+            Virgül veya tırnak hatası yapmamak için aracınızın emojisini, rengini ve sloganını buradan seçip oluşan kodu doğrudan <code id="targetJsonFileBadge">araclar/sudo.json</code> dosyanıza yapıştırabilir veya yerel sunucuda tek tıkla kaydedebilirsiniz!
+          </p>
+
+          <div class="builder-form">
+            <div class="form-row">
+              <label>Araç Emojisi Seçin:</label>
+              <div class="emoji-picker" id="emojiPicker">
+                <button type="button" class="emoji-btn selected" data-emoji="🏎️">🏎️</button>
+                <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
+                <button type="button" class="emoji-btn" data-emoji="🛸">🛸</button>
+                <button type="button" class="emoji-btn" data-emoji="⚡">⚡</button>
+                <button type="button" class="emoji-btn" data-emoji="🔥">🔥</button>
+                <button type="button" class="emoji-btn" data-emoji="🦅">🦅</button>
+                <button type="button" class="emoji-btn" data-emoji="👾">👾</button>
+                <button type="button" class="emoji-btn" data-emoji="🚓">🚓</button>
+                <button type="button" class="emoji-btn" data-emoji="🚜">🚜</button>
+                <button type="button" class="emoji-btn" data-emoji="🐉">🐉</button>
+                <button type="button" class="emoji-btn" data-emoji="☀️">☀️</button>
+                <button type="button" class="emoji-btn" data-emoji="🌯">🌯</button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="builderColor">Takım Rengi:</label>
+              <div class="color-picker-row">
+                <input type="color" id="builderColor" value="#ef4444" />
+                <span id="builderColorHex" class="mono-tag">#ef4444</span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="builderSlogan">Grup Sloganı (Yarışta spiker okuyacak!):</label>
+              <input type="text" id="builderSlogan" maxlength="100" placeholder="Örn: Root yetkisiyle pistin hakimi!" />
+            </div>
+
+            <div class="code-preview-header">
+              <span>📄 <strong id="previewFileName">araclar/sudo.json</strong> İçeriği (<code>"pistteMi": true</code>):</span>
+              <div style="display:flex; gap:8px;">
+                <button type="button" class="btn btn-sm btn-outline" id="copyJsonBtn">📋 JSON Kopyala</button>
+                <button type="button" class="btn btn-sm btn-success" id="saveJsonToDiskBtn">💾 Dosyaya Kaydet & Piste Çıkar</button>
+              </div>
+            </div>
+            <pre class="code-block" id="jsonPreviewBlock"></pre>
+
+            <div class="info-callout">
+              <strong>🤖 GitHub Actions Ne Yapacak?</strong>
+              <p>
+                Siz Pull Request (PR) açtığınızda <code>.github/workflows/pr-kontrol-ve-yayin.yml</code> iş akışı otomatik çalışacak ve <code>scripts/muayene-kontrol.js</code> ile bu JSON dosyasını denetleyecek. Yeşil onay (✅) aldığınızda <strong>Nohut Dürüm</strong> PR'ınızı birleştirecek ve aracınız piste çıkacak!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SEKME 2: CANLI GARAJ & PR LOBİSİ (10 GRUP TAKİP EKRANI)             -->
+    <!-- =================================================================== -->
+    <section id="tab-garaj" class="tab-panel">
+      <div class="garage-top-bar card">
+        <div class="garage-progress-info">
+          <div>
+            <h2>🔧 Canlı Garaj & Başlangıç Çizgisi Lobisi</h2>
+            <p>PR'ı birleştirilen (<code>"pistteMi": true</code> olan) gruplar otomatik olarak yeşile döner ve yarış pistine yerleşir.</p>
+          </div>
+          <div class="garage-actions">
+            <label class="auto-poll-label">
+              <input type="checkbox" id="autoPollCheckbox" checked />
+              <span>Otomatik Dosya Kontrolü (3 sn)</span>
+            </label>
+            <button class="btn btn-outline" id="garageActivateAllBtn">
+              ✅ Tüm 10 Grubu Piste Çıkar
+            </button>
+            <button class="btn btn-success" id="goToRaceFromGarageBtn">
+              🏁 Yarış Pistine Geç →
+            </button>
+          </div>
+        </div>
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner" id="garageProgressBar" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- 10 Grubun Garaj Kartları -->
+      <div class="garage-grid" id="garageCardsGrid">
+        <!-- JS ile 10 grup kartı oluşturulur -->
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SEKME 3: GİT GRAND PRIX - CANLI ŞANS YARIŞI PİSTİ                   -->
+    <!-- =================================================================== -->
+    <section id="tab-yaris" class="tab-panel">
+      <!-- Yarış Kontrol Paneli -->
+      <div class="race-controls-bar card">
+        <div class="race-controls-left">
+          <button class="btn btn-xl btn-start-race" id="startRaceBtn">
+            🏁 YARIŞI BAŞLAT!
+          </button>
+          <button class="btn btn-outline" id="resetRaceBtn" disabled>
+            🔄 Pisti Sıfırla
+          </button>
+        </div>
+
+        <div class="race-controls-center">
+          <div class="control-group">
+            <label for="raceFilterMode">Yarışacak Gruplar:</label>
+            <select id="raceFilterMode" class="select-input">
+              <option value="all">Tüm 10 Grubu Yarıştır (Tam Sınıf Modu)</option>
+              <option value="ready">Sadece PR'ı Onaylananlar (Pistte Hazır Olanlar)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="raceSpeedMode">Yarış Süresi / Tempo:</label>
+            <select id="raceSpeedMode" class="select-input">
+              <option value="normal" selected>Standart Heyecan (~22 sn)</option>
+              <option value="fast">Hızlı Tur (~12 sn)</option>
+              <option value="epic">Destansı Final (~32 sn)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="race-controls-right">
+          <div class="luck-badge" title="Kazanan her yarışta %100 rastgele (şans faktörü ve rastgele pist olaylarıyla) belirlenir!">
+            🎲 <strong>%100 Rastgele Şans Motoru Aktif</strong>
+            <small>Her PR atan grubun kazanma şansı eşittir!</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canlı Spiker Duyuru Bandı -->
+      <div class="commentary-banner" id="commentaryBanner">
+        <span class="mic-icon">🎙️</span>
+        <div class="commentary-text" id="liveCommentaryText">
+          Git Grand Prix Başlangıç Çizgisi Hazır! Bakalım bugün şans hangi grubun yüzüne gülecek?
+        </div>
+        <span class="race-timer" id="raceTimerDisplay">00.0s</span>
+      </div>
+
+      <!-- Geri Sayım Katmanı (3 - 2 - 1 - GO!) -->
+      <div class="countdown-overlay hidden" id="countdownOverlay">
+        <div class="countdown-number" id="countdownNumber">3</div>
+      </div>
+
+      <!-- Yarış Pisti + Canlı Sıralama Düzeni -->
+      <div class="race-arena-layout">
+        <!-- Sol/Orta: 10 Kulvarlı Yarış Pisti -->
+        <div class="track-wrapper card">
+          <!-- Pist Üstü Git Kontrol Noktaları (Checkpoints) -->
+          <div class="track-checkpoints">
+            <div class="cp-marker" style="left: 6%">🚦 START (clone)</div>
+            <div class="cp-marker" style="left: 28%">🌿 %25 Branch Virajı</div>
+            <div class="cp-marker" style="left: 52%">💬 %50 Commit Düzlüğü</div>
+            <div class="cp-marker" style="left: 76%">⚙️ %75 Actions Tüneli</div>
+            <div class="cp-marker finish-marker" style="right: 18px">🏁 MERGE (Bitiş)</div>
+          </div>
+
+          <!-- 10 Kulvar -->
+          <div class="track-lanes" id="trackLanesContainer">
+            <!-- JS ile 10 kulvar çizilir -->
+          </div>
+        </div>
+
+        <!-- Sağ: Anlık Sıralama ve Olay Günlüğü -->
+        <div class="race-sidebar">
+          <div class="card leaderboard-card">
+            <h3>🏆 Canlı Sıralama</h3>
+            <div class="live-leaderboard" id="liveLeaderboard">
+              <!-- JS ile güncellenir -->
+            </div>
+          </div>
+
+          <div class="card event-log-card">
+            <h3>⚡ Rastgele Pist Olayları</h3>
+            <div class="event-log-list" id="raceEventLog">
+              <div class="event-item muted">Yarış başladığında rastgele olaylar (Turbo, Merge Conflict, Actions Nitrosu) burada görünecek...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SEKME 4: CANLI GİT/CI TERMİNALİ, CONFLICT SİMÜLATÖRÜ & HAKEM PANELİ -->
+    <!-- =================================================================== -->
+    <section id="tab-egitim" class="tab-panel">
+      <div class="panel-grid-2">
+        <!-- Sol: Canlı Git/CI Terminali + Merge Conflict Çözüm Simülatörü -->
+        <div class="card">
+          <div class="card-header">
+            <h2>💻 Canlı Git & GitHub Actions (CI) Muayene Terminali</h2>
+            <span class="badge badge-green">Gerçek Zamanlı Denetim</span>
+          </div>
+          <p class="card-desc">
+            Sunum sırasında <code>scripts/muayene-kontrol.js</code> (CI testi) betiğini veya yerel Git depo durumunu (Branch & Commit geçmişini) doğrudan buradan çalıştırıp sınıfa gösterebilirsiniz:
+          </p>
+
+          <div class="terminal-actions-bar">
+            <button type="button" class="btn btn-sm btn-primary" id="runCiTestBtn">
+              🔍 Teknik Muayeneyi Çalıştır (npm test)
+            </button>
+            <button type="button" class="btn btn-sm btn-outline" id="runGitStatusBtn">
+              🌿 Git Dalları & Son Commitleri Göster
+            </button>
+          </div>
+          <pre class="code-block terminal-output-box" id="liveTerminalOutput">Çıktıyı görmek için yukarıdaki düğmelerden birine tıklayın...</pre>
+
+          <hr class="divider" />
+
+          <div class="card-header">
+            <h2>💥 Canlı Merge Conflict (Çakışma) Simülatörü</h2>
+            <span class="badge badge-orange">Canlı Kodlama Gösterimi İçin</span>
+          </div>
+          <p class="card-desc">
+            İzlencedeki <strong>"birleştirme ve çakışma çözümü"</strong> konusunu sınıfa göstermek için iki dal aynı satırı değiştirdiğinde oluşan işaretleri çözün:
+          </p>
+
+          <div class="conflict-demo-box">
+            <div class="conflict-toolbar">
+              <span>Dosya: <code>araclar/ornek-demo.json</code> (Satır 7)</span>
+              <div class="conflict-btns">
+                <button class="btn btn-sm btn-outline" data-resolve="current">Mevcut Dalı Kabul Et (main)</button>
+                <button class="btn btn-sm btn-outline" data-resolve="incoming">Gelen Dalı Kabul Et (ozellik/turbo)</button>
+                <button class="btn btn-sm btn-primary" data-resolve="both">İkisini Birleştir (Çözüm)</button>
+                <button class="btn btn-sm btn-danger" data-resolve="reset">🔄 Başa Sar</button>
+              </div>
+            </div>
+            <pre class="code-block conflict-code" id="conflictCodeDisplay"></pre>
+            <div class="conflict-status" id="conflictStatusMsg"></div>
+          </div>
+        </div>
+
+        <!-- Sağ: Nohut Dürüm Hakem & Sunucu Kontrol Paneli -->
+        <div class="card">
+          <div class="card-header">
+            <h2>🎛️ Nohut Dürüm Hakem & Sunucu Kontrol Paneli</h2>
+            <span class="badge badge-purple">Yönetici / Acil Durum</span>
+          </div>
+          <p class="card-desc">
+            Ders esnasında bir grubun interneti koparsa veya hızlıca tüm grupları teste sokmak isterseniz buradan tek tıkla araçların <code>pistteMi</code> durumunu doğrudan diskteki JSON dosyalarında güncelleyebilirsiniz.
+          </p>
+
+          <!-- Canlı GitHub Repo Bağlantısı -->
+          <div class="github-sync-box">
+            <label for="githubRepoInput"><strong>🌐 GitHub Depo Adresi (Komut Üretici & Canlı Senkronizasyon):</strong></label>
+            <div class="input-action-row">
+              <input type="text" id="githubRepoInput" value="Faruk-T/itp2026-hafta5-git-grand-prix" placeholder="Örn: Faruk-T/itp2026-hafta5-git-grand-prix" />
+              <button class="btn btn-primary" id="connectGithubBtn">Kaydet & Senkronize Et</button>
+            </div>
+            <small class="muted-text" id="githubSyncStatus">
+              1. Sekmedeki <code>git clone</code> komutu bu depo adresine göre otomatik oluşturulur.
+            </small>
+          </div>
+
+          <div class="Referee-quick-actions">
+            <button class="btn btn-success" id="markAllReadyBtn">✅ Tüm 10 Grubu "Pistte Hazır" Yap</button>
+            <button class="btn btn-outline" id="markAllWaitingBtn">⏳ Tümünü "Garajda Bekliyor" Yap</button>
+            <button class="btn btn-outline" id="resetLocalStorageBtn">🧹 Varsayılana Dön</button>
+          </div>
+
+          <!-- 10 Grup Hızlı Kontrol Tablosu -->
+          <div class="referee-table-wrapper">
+            <table class="referee-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Grup</th>
+                  <th>Emoji</th>
+                  <th>Slogan</th>
+                  <th>Durum (Pistte Mi?)</th>
+                </tr>
+              </thead>
+              <tbody id="refereeTableBody">
+                <!-- JS ile doldurulur -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- ŞAMPİYONLUK PODYUMU MODALI (YARIŞ BİTİNCE AÇILIR)                     -->
+  <!-- ===================================================================== -->
+  <div class="modal-backdrop hidden" id="podiumModal">
+    <div class="podium-modal-card">
+      <div class="confetti-container" id="confettiContainer"></div>
+      <div class="podium-header">
+        <span class="trophy-icon">🏆</span>
+        <h2>GİT GRAND PRIX ŞAMPİYONLARI!</h2>
+        <p>Tamamen şans ve rastgele pist olaylarıyla belirlenen podyum sonuçları:</p>
+      </div>
+
+      <div class="podium-stage" id="podiumStage">
+        <!-- JS ile 2. (Gümüş), 1. (Altın), 3. (Bronz) kürsüleri oluşturulur -->
+      </div>
+
+      <div class="podium-full-results" id="podiumFullResults">
+        <!-- Diğer grupların sıralaması -->
+      </div>
+
+      <div class="podium-footer">
+        <button class="btn btn-xl btn-start-race" id="raceAgainBtn">
+          🎲 Yeni Şans Yarışı Başlat (Rövanş!)
+        </button>
+        <button class="btn btn-outline" id="closePodiumBtn">
+          Pisti İncele
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bildirim (Toast) Kutusu -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
