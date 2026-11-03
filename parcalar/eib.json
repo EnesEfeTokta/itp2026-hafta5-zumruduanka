@@ -1,0 +1,19 @@
+{
+  "parcaNo": 9,
+  "kod": "eib",
+  "grupAdi": "EIB",
+  "sunumHaftasi": "Hafta 10",
+  "uyeler": [
+    "Ensar Kibaroğlu",
+    "İbrahim Budak",
+    "Burak Bahadur"
+  ],
+  "bolgeAdi": "Efsanevi Beşli Kuyruk Alevi",
+  "bolgeKodu": "TAIL_RIBBONS",
+  "aktif": true,
+  "anaRenk": "#10b981",
+  "ikincilRenk": "#fde047",
+  "enerjiSeviyesi": 100,
+  "mühür": "EIB-TAIL-09",
+  "mesaj": "Kuyruk telekleri rüzgarda alev şeritleri gibi dalgalanıyor!"
+}

@@ -1,0 +1,19 @@
+{
+  "parcaNo": 6,
+  "kod": "noctalia",
+  "grupAdi": "Noctalia",
+  "sunumHaftasi": "Hafta 12",
+  "uyeler": [
+    "Muhammed Yusuf Yıldız",
+    "Mustafa Aykaç",
+    "Aziz Emre Yılmaz"
+  ],
+  "bolgeAdi": "Sağ Yıldız Telekleri (Dış Kanat)",
+  "bolgeKodu": "RIGHT_OUTER_FEATHERS",
+  "aktif": true,
+  "anaRenk": "#c084fc",
+  "ikincilRenk": "#fde68a",
+  "enerjiSeviyesi": 100,
+  "mühür": "NOCTALIA-STAR-06",
+  "mesaj": "Gece yıldızlarının gücü sağ kanat teleklerinde!"
+}

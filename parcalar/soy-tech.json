@@ -1,0 +1,19 @@
+{
+  "parcaNo": 10,
+  "kod": "soy-tech",
+  "grupAdi": "SOY Tech",
+  "sunumHaftasi": "Hafta 4",
+  "uyeler": [
+    "Semih Beyaztaş",
+    "Ozan Hasköy",
+    "Yusuf Çırak"
+  ],
+  "bolgeAdi": "Kutsal Güneş Halesi ve Takımyıldız Aurası",
+  "bolgeKodu": "ASCENSION_HALO",
+  "aktif": true,
+  "anaRenk": "#6366f1",
+  "ikincilRenk": "#fde047",
+  "enerjiSeviyesi": 100,
+  "mühür": "SOYTECH-HALO-10",
+  "mesaj": "10 grubu birbirine bağlayan kutsal yükseliş halesi tamamlandı!"
+}

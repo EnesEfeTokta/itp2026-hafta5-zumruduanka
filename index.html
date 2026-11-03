@@ -3,447 +3,390 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Git Grand Prix 🏁 | Hafta 5: Git, GitHub ve GitHub Actions (Nohut Dürüm)</title>
-  <meta name="description" content="Atatürk Üniversitesi İnternet Tabanlı Programlama Dersi 5. Hafta Sınıf İçi Uygulama Platformu - Nohut Dürüm Grubu" />
+  <title>ZÜMRÜDÜANKA 🔥 | 10 Grup, Tek Kod, Küllerden Doğuş (Nohut Dürüm - Hafta 5)</title>
+  <meta name="description" content="Atatürk Üniversitesi İnternet Tabanlı Programlama Dersi 5. Hafta - Git, GitHub ve GitHub Actions ile 10 Grubun Kodlarını Birleştirerek Zümrüdüanka (Phoenix) Oluşturma Uygulaması" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- Üst Bilgi Çubuğu (Ders & Sunum Künyesi) -->
-  <header class="top-header">
-    <div class="header-left">
-      <div class="brand-badge">
-        <span class="brand-icon">🏁</span>
-        <div>
-          <h1>GİT GRAND PRIX <span class="version-pill">Hafta 5 Canlı Uygulama</span></h1>
-          <p class="subtitle">Git, GitHub ve GitHub Actions ile İş Akışı Otomasyonu • <strong>Doç. Dr. Hamza POLAT</strong></p>
-        </div>
+  <!-- Arka Plan Gerçek Zamanlı Ateş, Kül ve Takımyıldız Canvas Katmanı -->
+  <canvas id="phoenixCanvas"></canvas>
+
+  <!-- Üst Başlık ve Kontrol Çubuğu -->
+  <header class="top-bar" id="topBar">
+    <div class="brand-area">
+      <div class="phoenix-crest">🔥</div>
+      <div>
+        <h1>ZÜMRÜDÜANKA <span class="sub-badge">10 Dal (`branch`) • Tek Ruh (`main`)</span></h1>
+        <p>İnternet Tabanlı Programlama • Hafta 5: Git, GitHub &amp; Actions • <strong>Doç. Dr. Hamza POLAT</strong></p>
       </div>
     </div>
 
-    <div class="header-center">
-      <div class="host-card" title="5. Hafta Sunum ve Uygulama Sorumlusu Grup">
-        <span class="host-emoji">🌯</span>
-        <div>
-          <div class="host-title">SUNUM & HAKEM HEYETİ: <strong>NOHUT DÜRÜM</strong></div>
-          <div class="host-members">Tamer Çelik • Faruk Tazeoğlu • Muayad Jumaah</div>
-        </div>
-      </div>
+    <div class="host-pill">
+      <span>🌯 <strong>NOHUT DÜRÜM:</strong> Tamer Çelik • Faruk Tazeoğlu • Muayad Jumaah</span>
     </div>
 
-    <div class="header-right">
-      <div class="status-pills">
-        <div class="status-pill" id="serverModeBadge" title="Çalışma Ortamı Durumu">
-          <span class="dot pulse-green" id="serverModeDot"></span>
-          <span id="serverModeText">Kontrol Ediliyor...</span>
-        </div>
-        <div class="status-pill" id="headerReadyCount">
-          <span>🏎️ Pistte: <strong id="readyCountText">0 / 10</strong> Grup</span>
-        </div>
-        <button class="btn btn-icon" id="soundToggleBtn" title="Ses Efektlerini Aç/Kapat">
-          🔊 Ses Açık
-        </button>
-        <button class="btn btn-outline" id="gitPullBtn" title="Uzak depodan (GitHub) son birleştirilen PR'ları çek (git pull)">
-          ⬇️ Git Pull
-        </button>
-        <button class="btn btn-primary" id="syncFilesBtn" title="araclar/*.json dosyalarını ve GitHub durumunu yeniden oku">
-          🔄 Yenile
-        </button>
+    <div class="action-buttons">
+      <div class="energy-counter" id="energyCounterBadge">
+        <span class="spark-dot"></span>
+        <span>Birleşen Parça: <strong id="activePartsCount">10 / 10</strong></span>
       </div>
+
+      <button class="btn btn-fire" id="compileAndAwakenBtn" title="Tüm grup kodlarını derle ve sinematik doğuş animasyonunu başlat!">
+        🔥 Kodları Derle &amp; Anka'yı Uyandır!
+      </button>
+
+      <button class="btn btn-portal" id="togglePortalBtn">
+        🪶 Grup Kodu Yapıştır / Gönder
+      </button>
+
+      <button class="btn btn-ghost" id="resetToAshesBtn" title="Sınıf etkinliği başlangıcı için tüm parçaları 0/10 (Kül) durumuna sıfırla">
+        🌑 Küllere Dön (0/10)
+      </button>
+
+      <button class="btn btn-ghost" id="activateAllBtn" title="Tüm 10 grubun parçasını aktif et (10/10)">
+        ✨ Tamamla (10/10)
+      </button>
+
+      <button class="btn btn-ghost" id="soundBtn" title="Mistik Ses Efektlerini Aç/Kapat">
+        🔊
+      </button>
+
+      <button class="btn btn-ghost" id="zenModeBtn" title="Tam Ekran Sanat Modu (Panelleri Gizle/Göster)">
+        🖼️ Sanat Modu
+      </button>
     </div>
   </header>
 
-  <!-- Sistematik Ders Akışı Sekmeleri (Tık Tık İlerleyen Adımlar) -->
-  <nav class="step-nav" aria-label="Uygulama Aşamaları">
-    <button class="step-tab active" data-tab="tab-rehber">
-      <span class="step-num">1</span>
-      <div class="step-info">
-        <strong>Görev & Komut Üretici</strong>
-        <small>Her grup için 5 adımda tek PR rehberi</small>
-      </div>
-    </button>
-    <button class="step-tab" data-tab="tab-garaj">
-      <span class="step-num">2</span>
-      <div class="step-info">
-        <strong>Canlı Garaj & PR Lobisi</strong>
-        <small>10 grubun hazırlık ve CI durumu</small>
-      </div>
-    </button>
-    <button class="step-tab" data-tab="tab-yaris">
-      <span class="step-num">3</span>
-      <div class="step-info">
-        <strong>Git Grand Prix Pisti 🏁</strong>
-        <small>10 grup canlı şans yarışı ve spiker</small>
-      </div>
-    </button>
-    <button class="step-tab" data-tab="tab-egitim">
-      <span class="step-num">4</span>
-      <div class="step-info">
-        <strong>Canlı Git/CI & Hakem Paneli</strong>
-        <small>Conflict simülatörü, CI testi ve kontrol</small>
-      </div>
-    </button>
-  </nav>
+  <!-- Sanat Modundan Çıkış Yüzen Butonu -->
+  <button class="exit-zen-btn hidden" id="exitZenBtn">
+    ✨ Kontrolleri Göster (Tam Ekrandan Çık)
+  </button>
 
-  <!-- ANA İÇERİK ALANI -->
-  <main class="main-container">
+  <!-- ===================================================================== -->
+  <!-- MERKEZ SAHNE: ÇOK KATMANLI HAREKETLİ ZÜMRÜDÜANKA VE 10 GRUP HALESİ     -->
+  <!-- ===================================================================== -->
+  <main class="stage-container">
+    <!-- Sol ve Sağ 10 Grup Takımyıldız Mühürleri (5 Sol Kanatta, 5 Sağ Kanatta) -->
+    <aside class="constellation-column left-column" id="leftConstellation">
+      <!-- JS ile Grup 1..5 kartları oluşturulur -->
+    </aside>
 
-    <!-- =================================================================== -->
-    <!-- SEKME 1: GÖREV REHBERİ & GRUBA ÖZEL KOMUT ÜRETİCİ                   -->
-    <!-- =================================================================== -->
-    <section id="tab-rehber" class="tab-panel active">
-      <div class="panel-grid-2">
-        <!-- Sol: Grup Seçimi ve Adım Adım Terminal Komutları -->
-        <div class="card">
-          <div class="card-header">
-            <h2>👨‍💻 1. Adım: Grubunu Seç ve 5 Adımda Tek PR Gönder!</h2>
-            <span class="badge badge-blue">Sıfır Çakışma (Branch) Mantığı</span>
-          </div>
-          <p class="card-desc">
-            Her gruptan <strong>1 temsilci</strong> kendi grubuna tıklasın. Aşağıdaki komutlar seçtiğiniz gruba göre <strong>otomatik hazırlanır</strong>. Kendi dalınızı (<code>branch</code>) açacağınız için diğer 9 grupla hiçbir çakışma (conflict) yaşamayacaksınız!
-          </p>
-
-          <!-- 10 Grup + Nohut Dürüm Demo Seçim Butonları -->
-          <div class="group-selector-label">Grubunuzu Seçin (10 Yarışçı Grup + Canlı Kodlama Demo):</div>
-          <div class="group-selector-grid" id="groupSelectorButtons">
-            <!-- JS ile doldurulur -->
-          </div>
-
-          <!-- Seçilen Grubun Bilgi Kartı -->
-          <div class="selected-group-banner" id="selectedGroupBanner">
-            <!-- JS ile doldurulur -->
-          </div>
-
-          <!-- 5 Adımlık Kopyalanabilir Komut Listesi -->
-          <div class="steps-timeline" id="commandTimeline">
-            <!-- JS ile doldurulur -->
-          </div>
-        </div>
-
-        <!-- Sağ: İnteraktif JSON Hazırlayıcı (Hatasız Kod Üretici) -->
-        <div class="card">
-          <div class="card-header">
-            <h2>🎨 2. Adım: Aracını Tasarla & JSON Kodunu Hazırla</h2>
-            <span class="badge badge-green">GitHub Actions Uyumlu</span>
-          </div>
-          <p class="card-desc">
-            Virgül veya tırnak hatası yapmamak için aracınızın emojisini, rengini ve sloganını buradan seçip oluşan kodu doğrudan <code id="targetJsonFileBadge">araclar/sudo.json</code> dosyanıza yapıştırabilir veya yerel sunucuda tek tıkla kaydedebilirsiniz!
-          </p>
-
-          <div class="builder-form">
-            <div class="form-row">
-              <label>Araç Emojisi Seçin:</label>
-              <div class="emoji-picker" id="emojiPicker">
-                <button type="button" class="emoji-btn selected" data-emoji="🏎️">🏎️</button>
-                <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
-                <button type="button" class="emoji-btn" data-emoji="🛸">🛸</button>
-                <button type="button" class="emoji-btn" data-emoji="⚡">⚡</button>
-                <button type="button" class="emoji-btn" data-emoji="🔥">🔥</button>
-                <button type="button" class="emoji-btn" data-emoji="🦅">🦅</button>
-                <button type="button" class="emoji-btn" data-emoji="👾">👾</button>
-                <button type="button" class="emoji-btn" data-emoji="🚓">🚓</button>
-                <button type="button" class="emoji-btn" data-emoji="🚜">🚜</button>
-                <button type="button" class="emoji-btn" data-emoji="🐉">🐉</button>
-                <button type="button" class="emoji-btn" data-emoji="☀️">☀️</button>
-                <button type="button" class="emoji-btn" data-emoji="🌯">🌯</button>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <label for="builderColor">Takım Rengi:</label>
-              <div class="color-picker-row">
-                <input type="color" id="builderColor" value="#ef4444" />
-                <span id="builderColorHex" class="mono-tag">#ef4444</span>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <label for="builderSlogan">Grup Sloganı (Yarışta spiker okuyacak!):</label>
-              <input type="text" id="builderSlogan" maxlength="100" placeholder="Örn: Root yetkisiyle pistin hakimi!" />
-            </div>
-
-            <div class="code-preview-header">
-              <span>📄 <strong id="previewFileName">araclar/sudo.json</strong> İçeriği (<code>"pistteMi": true</code>):</span>
-              <div style="display:flex; gap:8px;">
-                <button type="button" class="btn btn-sm btn-outline" id="copyJsonBtn">📋 JSON Kopyala</button>
-                <button type="button" class="btn btn-sm btn-success" id="saveJsonToDiskBtn">💾 Dosyaya Kaydet & Piste Çıkar</button>
-              </div>
-            </div>
-            <pre class="code-block" id="jsonPreviewBlock"></pre>
-
-            <div class="info-callout">
-              <strong>🤖 GitHub Actions Ne Yapacak?</strong>
-              <p>
-                Siz Pull Request (PR) açtığınızda <code>.github/workflows/pr-kontrol-ve-yayin.yml</code> iş akışı otomatik çalışacak ve <code>scripts/muayene-kontrol.js</code> ile bu JSON dosyasını denetleyecek. Yeşil onay (✅) aldığınızda <strong>Nohut Dürüm</strong> PR'ınızı birleştirecek ve aracınız piste çıkacak!
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =================================================================== -->
-    <!-- SEKME 2: CANLI GARAJ & PR LOBİSİ (10 GRUP TAKİP EKRANI)             -->
-    <!-- =================================================================== -->
-    <section id="tab-garaj" class="tab-panel">
-      <div class="garage-top-bar card">
-        <div class="garage-progress-info">
-          <div>
-            <h2>🔧 Canlı Garaj & Başlangıç Çizgisi Lobisi</h2>
-            <p>PR'ı birleştirilen (<code>"pistteMi": true</code> olan) gruplar otomatik olarak yeşile döner ve yarış pistine yerleşir.</p>
-          </div>
-          <div class="garage-actions">
-            <label class="auto-poll-label">
-              <input type="checkbox" id="autoPollCheckbox" checked />
-              <span>Otomatik Dosya Kontrolü (3 sn)</span>
-            </label>
-            <button class="btn btn-outline" id="garageActivateAllBtn">
-              ✅ Tüm 10 Grubu Piste Çıkar
-            </button>
-            <button class="btn btn-success" id="goToRaceFromGarageBtn">
-              🏁 Yarış Pistine Geç →
-            </button>
-          </div>
-        </div>
-        <div class="progress-bar-outer">
-          <div class="progress-bar-inner" id="garageProgressBar" style="width: 0%"></div>
-        </div>
+    <!-- Merkez: Dev Vektör Zümrüdüanka (10 Anatomik Parçalı SVG Sanat Eseri) -->
+    <div class="phoenix-centerpiece" id="phoenixCenterpiece">
+      <!-- Doğuş Başlığı / Durum Afişi -->
+      <div class="phoenix-status-banner" id="phoenixStatusBanner">
+        <span class="status-crown">✨ KÜLLERİNDEN DOĞAN KOD EFSANESİ ✨</span>
+        <h2 id="phoenixMainTitle">10 GRUP BİRLEŞTİ — ZÜMRÜDÜANKA UYANDI!</h2>
+        <p id="phoenixSubTitle">Her grubun gönderdiği kod parçası (`commit &amp; merge`) Anka Kuşu'nun bir uzvuna hayat verdi.</p>
       </div>
 
-      <!-- 10 Grubun Garaj Kartları -->
-      <div class="garage-grid" id="garageCardsGrid">
-        <!-- JS ile 10 grup kartı oluşturulur -->
+      <!-- Çok Katmanlı İnteraktif SVG Zümrüdüanka -->
+      <div class="phoenix-svg-wrapper" id="phoenixSvgWrapper">
+        <svg id="phoenixSvg" viewBox="0 0 1200 860" xmlns="http://www.w3.org/2000/svg" aria-label="10 Parçalı Zümrüdüanka">
+          <defs>
+            <!-- Parlama (Glow) Filtreleri -->
+            <filter id="fireGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="8" result="blur1" />
+              <feGaussianBlur stdDeviation="20" result="blur2" />
+              <feMerge>
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            <filter id="intenseGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="12" result="blur1" />
+              <feGaussianBlur stdDeviation="28" result="blur2" />
+              <feMerge>
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            <!-- Ateş ve Altın Gradyanları -->
+            <linearGradient id="gradGoldFire" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#dc2626" />
+              <stop offset="45%" stop-color="#f97316" />
+              <stop offset="85%" stop-color="#fbbf24" />
+              <stop offset="100%" stop-color="#fef08a" />
+            </linearGradient>
+
+            <linearGradient id="gradLeftWing" x1="100%" y1="60%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#991b1b" />
+              <stop offset="35%" stop-color="#ea580c" />
+              <stop offset="75%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#fef9c3" />
+            </linearGradient>
+
+            <linearGradient id="gradRightWing" x1="0%" y1="60%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#991b1b" />
+              <stop offset="35%" stop-color="#ea580c" />
+              <stop offset="75%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#fef9c3" />
+            </linearGradient>
+
+            <linearGradient id="gradOuterLeft" x1="100%" y1="50%" x2="0%" y2="10%">
+              <stop offset="0%" stop-color="#f97316" />
+              <stop offset="55%" stop-color="#fbbf24" />
+              <stop offset="100%" stop-color="#ffffff" />
+            </linearGradient>
+
+            <linearGradient id="gradOuterRight" x1="0%" y1="50%" x2="100%" y2="10%">
+              <stop offset="0%" stop-color="#c084fc" />
+              <stop offset="50%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#fef08a" />
+            </linearGradient>
+
+            <linearGradient id="gradBodyArmor" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#be123c" />
+              <stop offset="50%" stop-color="#f43f5e" />
+              <stop offset="85%" stop-color="#fbbf24" />
+              <stop offset="100%" stop-color="#fef08a" />
+            </linearGradient>
+
+            <linearGradient id="gradTail" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#fbbf24" />
+              <stop offset="35%" stop-color="#f97316" />
+              <stop offset="70%" stop-color="#e11d48" />
+              <stop offset="100%" stop-color="#10b981" />
+            </linearGradient>
+
+            <radialGradient id="gradHeartCore" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="35%" stop-color="#fde047" />
+              <stop offset="70%" stop-color="#ff2a5f" />
+              <stop offset="100%" stop-color="rgba(255, 42, 95, 0)" />
+            </radialGradient>
+          </defs>
+
+          <!-- =============================================================== -->
+          <!-- PARÇA 10: SOY Tech — Kutsal Güneş Halesi & Kozmik Geometri      -->
+          <!-- =============================================================== -->
+          <g id="part-soy-tech" class="phoenix-part halo-group" data-grup="soy-tech">
+            <circle cx="600" cy="340" r="270" fill="none" stroke="url(#gradGoldFire)" stroke-width="2.5" stroke-dasharray="14 10" opacity="0.65" />
+            <circle cx="600" cy="340" r="225" fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-dasharray="6 8" opacity="0.5" />
+            <polygon points="600,45 665,215 845,215 700,320 755,495 600,390 445,495 500,320 355,215 535,215"
+              fill="none" stroke="url(#gradGoldFire)" stroke-width="1.6" opacity="0.38" />
+            <!-- Güneş Halesi Işınları -->
+            <g stroke="#fde047" stroke-width="2" opacity="0.55">
+              <line x1="600" y1="20" x2="600" y2="65" />
+              <line x1="825" y1="115" x2="790" y2="150" />
+              <line x1="375" y1="115" x2="410" y2="150" />
+              <line x1="910" y1="340" x2="865" y2="340" />
+              <line x1="290" y1="340" x2="335" y2="340" />
+            </g>
+          </g>
+
+          <!-- =============================================================== -->
+          <!-- PARÇA 9: EIB — Efsanevi Beşli Kuyruk Alevi                      -->
+          <!-- =============================================================== -->
+          <g id="part-eib" class="phoenix-part tail-group" data-grup="eib" filter="url(#fireGlow)">
+            <!-- Merkez Ana Kuyruk -->
+            <path d="M 600 470 C 580 575, 625 685, 600 830 C 618 690, 620 575, 600 470 Z" fill="url(#gradTail)" />
+            <!-- Sol İç Kuyruk Şeridi -->
+            <path d="M 588 465 C 535 565, 495 675, 435 805 C 515 695, 560 585, 600 475 Z" fill="url(#gradGoldFire)" opacity="0.92" />
+            <!-- Sağ İç Kuyruk Şeridi -->
+            <path d="M 612 465 C 665 565, 705 675, 765 805 C 685 695, 640 585, 600 475 Z" fill="url(#gradGoldFire)" opacity="0.92" />
+            <!-- Sol Dış Kuyruk Şeridi -->
+            <path d="M 575 455 C 490 540, 415 630, 330 745 C 435 655, 515 560, 590 468 Z" fill="url(#gradTail)" opacity="0.82" />
+            <!-- Sağ Dış Kuyruk Şeridi -->
+            <path d="M 625 455 C 710 540, 785 630, 870 745 C 765 655, 685 560, 610 468 Z" fill="url(#gradTail)" opacity="0.82" />
+            <!-- Kuyruk Göz Damlası Mücevherleri -->
+            <circle cx="600" cy="770" r="8" fill="#fef08a" />
+            <circle cx="465" cy="755" r="7" fill="#34d399" />
+            <circle cx="735" cy="755" r="7" fill="#34d399" />
+          </g>
+
+          <!-- =============================================================== -->
+          <!-- SOL KANAT BÜTÜNÜ (Kanat Çırpma Animasyonu İçin Tek Grup)        -->
+          <!-- =============================================================== -->
+          <g class="wing-left-animator">
+            <!-- PARÇA 5: ITERSOLIS — Sol Güneş Telekleri (7 Dev Dış Telek) -->
+            <g id="part-itersolis" class="phoenix-part" data-grup="itersolis" filter="url(#fireGlow)">
+              <path d="M 480 310 C 330 220, 175 130, 35 75 C 125 165, 275 265, 455 340 Z" fill="url(#gradOuterLeft)" />
+              <path d="M 465 330 C 300 265, 145 200, 20 165 C 120 235, 270 305, 445 360 Z" fill="url(#gradOuterLeft)" opacity="0.95" />
+              <path d="M 455 352 C 295 310, 145 275, 35 260 C 135 310, 280 350, 445 382 Z" fill="url(#gradOuterLeft)" opacity="0.9" />
+              <path d="M 450 375 C 305 355, 170 345, 65 348 C 165 380, 300 392, 448 402 Z" fill="url(#gradOuterLeft)" opacity="0.85" />
+              <path d="M 455 395 C 325 395, 205 405, 115 425 C 215 435, 330 428, 458 418 Z" fill="url(#gradOuterLeft)" opacity="0.8" />
+              <path d="M 468 412 C 360 430, 260 455, 180 490 C 275 480, 375 455, 475 430 Z" fill="url(#gradOuterLeft)" opacity="0.75" />
+            </g>
+
+            <!-- PARÇA 3: RotBalance — Sol İç Kanat ve Alev Omuzları -->
+            <g id="part-rotbalance" class="phoenix-part" data-grup="rotbalance" filter="url(#fireGlow)">
+              <path d="M 565 310 C 455 215, 295 160, 145 140 C 235 225, 365 290, 525 365 Z" fill="url(#gradLeftWing)" />
+              <path d="M 555 340 C 440 275, 300 245, 175 240 C 265 300, 385 340, 535 390 Z" fill="url(#gradLeftWing)" opacity="0.92" />
+              <path d="M 550 370 C 445 335, 330 330, 225 345 C 315 375, 420 395, 545 415 Z" fill="url(#gradLeftWing)" opacity="0.88" />
+              <!-- Kanat İçi Altın Damar Çizgileri -->
+              <path d="M 555 325 Q 380 240 190 185" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.8" />
+              <path d="M 545 355 Q 390 300 230 275" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.7" />
+            </g>
+          </g>
+
+          <!-- =============================================================== -->
+          <!-- SAĞ KANAT BÜTÜNÜ (Kanat Çırpma Animasyonu İçin Tek Grup)        -->
+          <!-- =============================================================== -->
+          <g class="wing-right-animator">
+            <!-- PARÇA 6: Noctalia — Sağ Yıldız Telekleri (7 Dev Dış Telek) -->
+            <g id="part-noctalia" class="phoenix-part" data-grup="noctalia" filter="url(#fireGlow)">
+              <path d="M 720 310 C 870 220, 1025 130, 1165 75 C 1075 165, 925 265, 745 340 Z" fill="url(#gradOuterRight)" />
+              <path d="M 735 330 C 900 265, 1055 200, 1180 165 C 1080 235, 930 305, 755 360 Z" fill="url(#gradOuterRight)" opacity="0.95" />
+              <path d="M 745 352 C 905 310, 1055 275, 1165 260 C 1065 310, 920 350, 755 382 Z" fill="url(#gradOuterRight)" opacity="0.9" />
+              <path d="M 750 375 C 895 355, 1030 345, 1135 348 C 1035 380, 900 392, 752 402 Z" fill="url(#gradOuterRight)" opacity="0.85" />
+              <path d="M 745 395 C 875 395, 995 405, 1085 425 C 985 435, 870 428, 742 418 Z" fill="url(#gradOuterRight)" opacity="0.8" />
+              <path d="M 732 412 C 840 430, 940 455, 1020 490 C 925 480, 825 455, 725 430 Z" fill="url(#gradOuterRight)" opacity="0.75" />
+            </g>
+
+            <!-- PARÇA 4: TDB — Sağ İç Kanat ve Alev Omuzları -->
+            <g id="part-tdb" class="phoenix-part" data-grup="tdb" filter="url(#fireGlow)">
+              <path d="M 635 310 C 745 215, 905 160, 1055 140 C 965 225, 835 290, 675 365 Z" fill="url(#gradRightWing)" />
+              <path d="M 645 340 C 760 275, 900 245, 1025 240 C 935 300, 815 340, 665 390 Z" fill="url(#gradRightWing)" opacity="0.92" />
+              <path d="M 650 370 C 755 335, 870 330, 975 345 C 885 375, 780 395, 655 415 Z" fill="url(#gradRightWing)" opacity="0.88" />
+              <!-- Kanat İçi Altın Damar Çizgileri -->
+              <path d="M 645 325 Q 820 240 1010 185" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.8" />
+              <path d="M 655 355 Q 810 300 970 275" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.7" />
+            </g>
+          </g>
+
+          <!-- =============================================================== -->
+          <!-- PARÇA 8: HAT — Plazma Pençeler ve Ateş Dalgası                  -->
+          <!-- =============================================================== -->
+          <g id="part-hat" class="phoenix-part talons-group" data-grup="hat" filter="url(#fireGlow)">
+            <!-- Enerji Halkası -->
+            <ellipse cx="600" cy="510" rx="95" ry="24" fill="none" stroke="#38bdf8" stroke-width="3" opacity="0.75" />
+            <ellipse cx="600" cy="510" rx="65" ry="14" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.85" />
+            <!-- Sol ve Sağ Altın Pençeler -->
+            <path d="M 565 450 L 540 500 L 555 495 L 550 515 L 572 485 Z" fill="#fef08a" stroke="#06b6d4" stroke-width="1.5" />
+            <path d="M 635 450 L 660 500 L 645 495 L 650 515 L 628 485 Z" fill="#fef08a" stroke="#06b6d4" stroke-width="1.5" />
+          </g>
+
+          <!-- =============================================================== -->
+          <!-- PARÇA 7: 404 — Mistik Göğüs Zırhı ve Boyun Tüyleri              -->
+          <!-- =============================================================== -->
+          <g id="part-404" class="phoenix-part armor-group" data-grup="404" filter="url(#fireGlow)">
+            <!-- Ana Gövde ve Boyun Silüeti -->
+            <path d="M 600 205 C 565 245, 540 315, 548 395 C 555 445, 578 480, 600 495 C 622 480, 645 445, 652 395 C 660 315, 635 245, 600 205 Z"
+              fill="url(#gradBodyArmor)" stroke="#fde047" stroke-width="1.5" />
+            <!-- Göğüs Zırhı Katmanlı Telek Desenleri -->
+            <path d="M 565 310 Q 600 340 635 310" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.85" />
+            <path d="M 556 345 Q 600 380 644 345" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.85" />
+            <path d="M 560 380 Q 600 415 640 380" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.85" />
+            <path d="M 570 415 Q 600 445 630 415" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.75" />
+          </g>
+
+          <!-- =============================================================== -->
+          <!-- PARÇA 1: Sudo — Anka'nın Kalbi ve Kor Çekirdeği                 -->
+          <!-- =============================================================== -->
+          <g id="part-sudo" class="phoenix-part heart-group" data-grup="sudo" filter="url(#intenseGlow)">
+            <circle cx="600" cy="348" r="46" fill="url(#gradHeartCore)" />
+            <!-- Elmas Kalp Kristali -->
+            <polygon points="600,312 626,348 600,384 574,348" fill="#ffffff" stroke="#ff2a5f" stroke-width="3" />
+            <circle cx="600" cy="348" r="10" fill="#fef08a" />
+          </g>
+
+          <!-- =============================================================== -->
+          <!-- PARÇA 2: IT Code — Asil Baş ve Altın Kraliyet Tacı              -->
+          <!-- =============================================================== -->
+          <g id="part-it-code" class="phoenix-part head-group" data-grup="it-code" filter="url(#fireGlow)">
+            <!-- 5'li Altın Kraliyet Tacı Telekleri -->
+            <path d="M 600 165 C 595 115, 600 75, 600 45 C 608 80, 608 120, 600 165 Z" fill="#fef08a" />
+            <path d="M 590 170 C 570 125, 550 95, 530 70 C 558 100, 578 135, 594 172 Z" fill="url(#gradGoldFire)" />
+            <path d="M 610 170 C 630 125, 650 95, 670 70 C 642 100, 622 135, 606 172 Z" fill="url(#gradGoldFire)" />
+            <path d="M 582 180 C 552 150, 525 130, 495 118 C 530 138, 558 160, 586 184 Z" fill="url(#gradGoldFire)" opacity="0.9" />
+            <path d="M 618 180 C 648 150, 675 130, 705 118 C 670 138, 642 160, 614 184 Z" fill="url(#gradGoldFire)" opacity="0.9" />
+
+            <!-- Baş ve Keskin Gaga -->
+            <path d="M 600 155 C 575 165, 568 195, 582 220 L 600 248 L 618 220 C 632 195, 625 165, 600 155 Z"
+              fill="url(#gradGoldFire)" stroke="#fef9c3" stroke-width="2" />
+            <!-- Parlayan Gözler -->
+            <polygon points="584,192 595,198 586,203" fill="#ffffff" />
+            <polygon points="616,192 605,198 614,203" fill="#ffffff" />
+          </g>
+        </svg>
       </div>
-    </section>
 
-    <!-- =================================================================== -->
-    <!-- SEKME 3: GİT GRAND PRIX - CANLI ŞANS YARIŞI PİSTİ                   -->
-    <!-- =================================================================== -->
-    <section id="tab-yaris" class="tab-panel">
-      <!-- Yarış Kontrol Paneli -->
-      <div class="race-controls-bar card">
-        <div class="race-controls-left">
-          <button class="btn btn-xl btn-start-race" id="startRaceBtn">
-            🏁 YARIŞI BAŞLAT!
-          </button>
-          <button class="btn btn-outline" id="resetRaceBtn" disabled>
-            🔄 Pisti Sıfırla
-          </button>
-        </div>
-
-        <div class="race-controls-center">
-          <div class="control-group">
-            <label for="raceFilterMode">Yarışacak Gruplar:</label>
-            <select id="raceFilterMode" class="select-input">
-              <option value="all">Tüm 10 Grubu Yarıştır (Tam Sınıf Modu)</option>
-              <option value="ready">Sadece PR'ı Onaylananlar (Pistte Hazır Olanlar)</option>
-            </select>
-          </div>
-
-          <div class="control-group">
-            <label for="raceSpeedMode">Yarış Süresi / Tempo:</label>
-            <select id="raceSpeedMode" class="select-input">
-              <option value="normal" selected>Standart Heyecan (~22 sn)</option>
-              <option value="fast">Hızlı Tur (~12 sn)</option>
-              <option value="epic">Destansı Final (~32 sn)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="race-controls-right">
-          <div class="luck-badge" title="Kazanan her yarışta %100 rastgele (şans faktörü ve rastgele pist olaylarıyla) belirlenir!">
-            🎲 <strong>%100 Rastgele Şans Motoru Aktif</strong>
-            <small>Her PR atan grubun kazanma şansı eşittir!</small>
-          </div>
-        </div>
+      <!-- Alt İmza ve Seçili Parça Bilgi Çubuğu -->
+      <div class="phoenix-footer-bar" id="phoenixFooterBar">
+        <span id="hoveredPartInfo">
+          🔥 <strong>İpucu:</strong> Yanlardaki 10 grup mührünün veya Anka Kuşu'nun uzuvlarının üzerine gelerek hangi grubun hangi parçaya hayat verdiğini görebilirsiniz.
+        </span>
       </div>
+    </div>
 
-      <!-- Canlı Spiker Duyuru Bandı -->
-      <div class="commentary-banner" id="commentaryBanner">
-        <span class="mic-icon">🎙️</span>
-        <div class="commentary-text" id="liveCommentaryText">
-          Git Grand Prix Başlangıç Çizgisi Hazır! Bakalım bugün şans hangi grubun yüzüne gülecek?
-        </div>
-        <span class="race-timer" id="raceTimerDisplay">00.0s</span>
-      </div>
-
-      <!-- Geri Sayım Katmanı (3 - 2 - 1 - GO!) -->
-      <div class="countdown-overlay hidden" id="countdownOverlay">
-        <div class="countdown-number" id="countdownNumber">3</div>
-      </div>
-
-      <!-- Yarış Pisti + Canlı Sıralama Düzeni -->
-      <div class="race-arena-layout">
-        <!-- Sol/Orta: 10 Kulvarlı Yarış Pisti -->
-        <div class="track-wrapper card">
-          <!-- Pist Üstü Git Kontrol Noktaları (Checkpoints) -->
-          <div class="track-checkpoints">
-            <div class="cp-marker" style="left: 6%">🚦 START (clone)</div>
-            <div class="cp-marker" style="left: 28%">🌿 %25 Branch Virajı</div>
-            <div class="cp-marker" style="left: 52%">💬 %50 Commit Düzlüğü</div>
-            <div class="cp-marker" style="left: 76%">⚙️ %75 Actions Tüneli</div>
-            <div class="cp-marker finish-marker" style="right: 18px">🏁 MERGE (Bitiş)</div>
-          </div>
-
-          <!-- 10 Kulvar -->
-          <div class="track-lanes" id="trackLanesContainer">
-            <!-- JS ile 10 kulvar çizilir -->
-          </div>
-        </div>
-
-        <!-- Sağ: Anlık Sıralama ve Olay Günlüğü -->
-        <div class="race-sidebar">
-          <div class="card leaderboard-card">
-            <h3>🏆 Canlı Sıralama</h3>
-            <div class="live-leaderboard" id="liveLeaderboard">
-              <!-- JS ile güncellenir -->
-            </div>
-          </div>
-
-          <div class="card event-log-card">
-            <h3>⚡ Rastgele Pist Olayları</h3>
-            <div class="event-log-list" id="raceEventLog">
-              <div class="event-item muted">Yarış başladığında rastgele olaylar (Turbo, Merge Conflict, Actions Nitrosu) burada görünecek...</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =================================================================== -->
-    <!-- SEKME 4: CANLI GİT/CI TERMİNALİ, CONFLICT SİMÜLATÖRÜ & HAKEM PANELİ -->
-    <!-- =================================================================== -->
-    <section id="tab-egitim" class="tab-panel">
-      <div class="panel-grid-2">
-        <!-- Sol: Canlı Git/CI Terminali + Merge Conflict Çözüm Simülatörü -->
-        <div class="card">
-          <div class="card-header">
-            <h2>💻 Canlı Git & GitHub Actions (CI) Muayene Terminali</h2>
-            <span class="badge badge-green">Gerçek Zamanlı Denetim</span>
-          </div>
-          <p class="card-desc">
-            Sunum sırasında <code>scripts/muayene-kontrol.js</code> (CI testi) betiğini veya yerel Git depo durumunu (Branch & Commit geçmişini) doğrudan buradan çalıştırıp sınıfa gösterebilirsiniz:
-          </p>
-
-          <div class="terminal-actions-bar">
-            <button type="button" class="btn btn-sm btn-primary" id="runCiTestBtn">
-              🔍 Teknik Muayeneyi Çalıştır (npm test)
-            </button>
-            <button type="button" class="btn btn-sm btn-outline" id="runGitStatusBtn">
-              🌿 Git Dalları & Son Commitleri Göster
-            </button>
-          </div>
-          <pre class="code-block terminal-output-box" id="liveTerminalOutput">Çıktıyı görmek için yukarıdaki düğmelerden birine tıklayın...</pre>
-
-          <hr class="divider" />
-
-          <div class="card-header">
-            <h2>💥 Canlı Merge Conflict (Çakışma) Simülatörü</h2>
-            <span class="badge badge-orange">Canlı Kodlama Gösterimi İçin</span>
-          </div>
-          <p class="card-desc">
-            İzlencedeki <strong>"birleştirme ve çakışma çözümü"</strong> konusunu sınıfa göstermek için iki dal aynı satırı değiştirdiğinde oluşan işaretleri çözün:
-          </p>
-
-          <div class="conflict-demo-box">
-            <div class="conflict-toolbar">
-              <span>Dosya: <code>araclar/ornek-demo.json</code> (Satır 7)</span>
-              <div class="conflict-btns">
-                <button class="btn btn-sm btn-outline" data-resolve="current">Mevcut Dalı Kabul Et (main)</button>
-                <button class="btn btn-sm btn-outline" data-resolve="incoming">Gelen Dalı Kabul Et (ozellik/turbo)</button>
-                <button class="btn btn-sm btn-primary" data-resolve="both">İkisini Birleştir (Çözüm)</button>
-                <button class="btn btn-sm btn-danger" data-resolve="reset">🔄 Başa Sar</button>
-              </div>
-            </div>
-            <pre class="code-block conflict-code" id="conflictCodeDisplay"></pre>
-            <div class="conflict-status" id="conflictStatusMsg"></div>
-          </div>
-        </div>
-
-        <!-- Sağ: Nohut Dürüm Hakem & Sunucu Kontrol Paneli -->
-        <div class="card">
-          <div class="card-header">
-            <h2>🎛️ Nohut Dürüm Hakem & Sunucu Kontrol Paneli</h2>
-            <span class="badge badge-purple">Yönetici / Acil Durum</span>
-          </div>
-          <p class="card-desc">
-            Ders esnasında bir grubun interneti koparsa veya hızlıca tüm grupları teste sokmak isterseniz buradan tek tıkla araçların <code>pistteMi</code> durumunu doğrudan diskteki JSON dosyalarında güncelleyebilirsiniz.
-          </p>
-
-          <!-- Canlı GitHub Repo Bağlantısı -->
-          <div class="github-sync-box">
-            <label for="githubRepoInput"><strong>🌐 GitHub Depo Adresi (Komut Üretici & Canlı Senkronizasyon):</strong></label>
-            <div class="input-action-row">
-              <input type="text" id="githubRepoInput" value="Faruk-T/itp2026-hafta5-git-grand-prix" placeholder="Örn: Faruk-T/itp2026-hafta5-git-grand-prix" />
-              <button class="btn btn-primary" id="connectGithubBtn">Kaydet & Senkronize Et</button>
-            </div>
-            <small class="muted-text" id="githubSyncStatus">
-              1. Sekmedeki <code>git clone</code> komutu bu depo adresine göre otomatik oluşturulur.
-            </small>
-          </div>
-
-          <div class="Referee-quick-actions">
-            <button class="btn btn-success" id="markAllReadyBtn">✅ Tüm 10 Grubu "Pistte Hazır" Yap</button>
-            <button class="btn btn-outline" id="markAllWaitingBtn">⏳ Tümünü "Garajda Bekliyor" Yap</button>
-            <button class="btn btn-outline" id="resetLocalStorageBtn">🧹 Varsayılana Dön</button>
-          </div>
-
-          <!-- 10 Grup Hızlı Kontrol Tablosu -->
-          <div class="referee-table-wrapper">
-            <table class="referee-table">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Grup</th>
-                  <th>Emoji</th>
-                  <th>Slogan</th>
-                  <th>Durum (Pistte Mi?)</th>
-                </tr>
-              </thead>
-              <tbody id="refereeTableBody">
-                <!-- JS ile doldurulur -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Sağ Sütun: Grup 6..10 Takımyıldız Mühürleri -->
+    <aside class="constellation-column right-column" id="rightConstellation">
+      <!-- JS ile Grup 6..10 kartları oluşturulur -->
+    </aside>
   </main>
 
   <!-- ===================================================================== -->
-  <!-- ŞAMPİYONLUK PODYUMU MODALI (YARIŞ BİTİNCE AÇILIR)                     -->
+  <!-- GRUP KODU YAPIŞTIRMA & GÖNDERME PORTALI (MODAL / DRAWER)              -->
   <!-- ===================================================================== -->
-  <div class="modal-backdrop hidden" id="podiumModal">
-    <div class="podium-modal-card">
-      <div class="confetti-container" id="confettiContainer"></div>
-      <div class="podium-header">
-        <span class="trophy-icon">🏆</span>
-        <h2>GİT GRAND PRIX ŞAMPİYONLARI!</h2>
-        <p>Tamamen şans ve rastgele pist olaylarıyla belirlenen podyum sonuçları:</p>
+  <div class="portal-backdrop hidden" id="portalBackdrop">
+    <div class="portal-modal">
+      <div class="portal-header">
+        <div>
+          <h2>🪶 Zümrüdüanka Grup Kodu Yapıştırma &amp; Birleştirme Portalı</h2>
+          <p>Her gruptan 1 temsilci grubunu seçer, ilgili parça kodunu kutuya yapıştırıp gönderir (veya <code>parcalar/&lt;grup&gt;.json</code> dosyasına commit atar).</p>
+        </div>
+        <button class="btn btn-ghost" id="closePortalBtn">✕ Kapat</button>
       </div>
 
-      <div class="podium-stage" id="podiumStage">
-        <!-- JS ile 2. (Gümüş), 1. (Altın), 3. (Bronz) kürsüleri oluşturulur -->
-      </div>
+      <div class="portal-body">
+        <!-- Sol: 10 Grup Seçici ve Git Komutları -->
+        <div class="portal-left">
+          <div class="section-label">1️⃣ Grubunuzu Seçin:</div>
+          <div class="portal-group-grid" id="portalGroupGrid">
+            <!-- JS ile 10 grup butonu oluşturulur -->
+          </div>
 
-      <div class="podium-full-results" id="podiumFullResults">
-        <!-- Diğer grupların sıralaması -->
-      </div>
+          <div class="selected-group-card" id="portalSelectedGroupInfo">
+            <!-- JS ile seçilen grubun üyeleri ve Anka bölgesi gösterilir -->
+          </div>
 
-      <div class="podium-footer">
-        <button class="btn btn-xl btn-start-race" id="raceAgainBtn">
-          🎲 Yeni Şans Yarışı Başlat (Rövanş!)
-        </button>
-        <button class="btn btn-outline" id="closePodiumBtn">
-          Pisti İncele
-        </button>
+          <div class="section-label" style="margin-top:12px;">2️⃣ Grubunuza Özel Hazır Parça Kodu:</div>
+          <div class="template-actions">
+            <button type="button" class="btn btn-sm btn-outline" id="copyTemplateCodeBtn">
+              📋 Bu Kodu Kopyala
+            </button>
+            <button type="button" class="btn btn-sm btn-portal" id="pasteToEditorBtn">
+              ⚡ Sağdaki Kutuya Otomatik Yapıştır →
+            </button>
+          </div>
+          <pre class="code-box" id="templateCodeBox"></pre>
+        </div>
+
+        <!-- Sağ: Kod Yapıştırma Alanı ve Gönder Butonu -->
+        <div class="portal-right">
+          <div class="section-label">3️⃣ İlgili Kodu Buraya Yapıştırın ve Gönderin (veya VS Code'da <code>npm run derle</code> çalıştırın):</div>
+          <textarea id="codePasteArea" class="code-textarea" rows="12" placeholder="Grubunuza ait JSON parça kodunu buraya yapıştırın..."></textarea>
+
+          <div class="custom-message-row">
+            <label for="customCommitMsgInput">Grup Ateş Mesajı (İsteğe Bağlı Özelleştirin):</label>
+            <input type="text" id="customCommitMsgInput" placeholder="Örn: Sudo grubu Anka'nın kalbine yaşam ateşi verdi!" />
+          </div>
+
+          <div class="portal-submit-row">
+            <button type="button" class="btn btn-xl btn-fire" id="submitGroupCodeBtn">
+              🔥 Kodu Gönder, Derle ve Parçayı Uyandır!
+            </button>
+          </div>
+
+          <div class="compiler-log-box" id="compilerLogBox">
+            <code>Hazır. Kodu gönderdiğinizde derleyici çıktısı burada görünecek...</code>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Bildirim (Toast) Kutusu -->
+  <!-- Bildirim Kutusu -->
   <div class="toast-container" id="toastContainer"></div>
 
+  <!-- Derlenen Parça Verisi (npm run derle ile otomatik güncellenir) -->
+  <script src="js/derlenen-parcalar.js"></script>
+  <!-- Ana Zümrüdüanka Motoru -->
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -2,16 +2,20 @@
  * İTP 2026 - Hafta 5: Git, GitHub ve GitHub Actions
  * Nohut Dürüm Grubu (Tamer Çelik, Faruk Tazeoğlu, Muayad Jumaah)
  *
- * Git Grand Prix - Otomatik Teknik Muayene (CI Doğrulama) Betiği
- * Her Pull Request (PR) ve Push işleminde GitHub Actions tarafından otomatik çalıştırılır.
+ * ZÜMRÜDÜANKA (THE GIT PHOENIX) - PARÇA DERLEYİCİ VE CI DOĞRULAMA MOTORU
+ * Kullanım:
+ *   npm run derle     -> 10 grubun parça kodlarını derler ve görseli günceller
+ *   npm run sifirla   -> Tüm parçaları başlangıç (aktif: false) durumuna alır
+ *   npm run tamamla   -> Tüm 10 parçayı aktif (aktif: true) durumuna alır
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const ARACLAR_KLASORU = path.join(__dirname, '..', 'araclar');
+const PARCALAR_KLASORU = path.join(__dirname, '..', 'parcalar');
+const DERLEME_CIKTI_YOLU = path.join(__dirname, '..', 'js', 'derlenen-parcalar.js');
 
-const BEKLENEN_GRUPLAR = [
+const BEKLENEN_PARCALAR = [
   'sudo.json',
   'it-code.json',
   'rotbalance.json',
@@ -24,112 +28,125 @@ const BEKLENEN_GRUPLAR = [
   'soy-tech.json'
 ];
 
+const arg = process.argv[2];
+
+// Eğer --sifirla veya --tamamla bayrağı verildiyse dosyaları güncelle
+if (arg === '--sifirla' || arg === '--tamamla') {
+  const yeniDurum = arg === '--tamamla';
+  for (const dosyaAdi of BEKLENEN_PARCALAR) {
+    const tamYol = path.join(PARCALAR_KLASORU, dosyaAdi);
+    if (fs.existsSync(tamYol)) {
+      const veri = JSON.parse(fs.readFileSync(tamYol, 'utf8'));
+      veri.aktif = yeniDurum;
+      fs.writeFileSync(tamYol, JSON.stringify(veri, null, 2) + '\n', 'utf8');
+    }
+  }
+  console.log(
+    yeniDurum
+      ? '🔥 Tüm 10 grup parçası AKTİF (aktif: true) duruma getirildi!'
+      : '🌑 Tüm 10 grup parçası KÜL (aktif: false) durumuna sıfırlandı!'
+  );
+}
+
+console.log('======================================================================');
+console.log('🔥 ZÜMRÜDÜANKA (THE GIT PHOENIX) - KOD DERLEME VE CI MUAYENE MOTORU 🔥');
+console.log('🌯 Sunum Grubu: Nohut Dürüm (Tamer Çelik • Faruk Tazeoğlu • Muayad Jumaah)');
+console.log('======================================================================\n');
+
 let hataSayisi = 0;
-let pisttekiGrupSayisi = 0;
+let aktifParcaSayisi = 0;
+const derlenenListe = [];
 const raporSatirlari = [];
 
-console.log('==============================================================');
-console.log('🏁 GİT GRAND PRIX - GITHUB ACTIONS TEKNİK MUAYENE BAŞLADI 🏁');
-console.log('🌯 Hakem Heyeti: Nohut Dürüm (Tamer, Faruk, Muayad)');
-console.log('==============================================================\n');
-
-for (const dosyaAdi of BEKLENEN_GRUPLAR) {
-  const dosyaYolu = path.join(ARACLAR_KLASORU, dosyaAdi);
+for (let i = 0; i < BEKLENEN_PARCALAR.length; i++) {
+  const dosyaAdi = BEKLENEN_PARCALAR[i];
+  const dosyaYolu = path.join(PARCALAR_KLASORU, dosyaAdi);
 
   if (!fs.existsSync(dosyaYolu)) {
-    console.error(`❌ [HATA] ${dosyaAdi} dosyası bulunamadı!`);
+    console.error(`❌ [EKSİK DOSYA] parcalar/${dosyaAdi} bulunamadı!`);
     hataSayisi++;
-    raporSatirlari.push(`| \`${dosyaAdi}\` | - | ❌ Dosya Eksik | - |`);
     continue;
   }
 
   let veri;
   try {
-    const hamIcerik = fs.readFileSync(dosyaYolu, 'utf8');
-    veri = JSON.parse(hamIcerik);
+    veri = JSON.parse(fs.readFileSync(dosyaYolu, 'utf8'));
   } catch (err) {
-    console.error(`❌ [JSON SÖZDİZİMİ HATASI] ${dosyaAdi}: Virgül veya tırnak işaretlerini kontrol edin! (${err.message})`);
+    console.error(`❌ [JSON SÖZDİZİMİ HATASI] parcalar/${dosyaAdi}: ${err.message}`);
     hataSayisi++;
-    raporSatirlari.push(`| \`${dosyaAdi}\` | - | ❌ JSON Hatası | Sözdizimi bozuk |`);
     continue;
   }
 
-  // Zorunlu alan kontrolleri
-  const eksikler = [];
-  if (typeof veri.grupAdi !== 'string' || !veri.grupAdi.trim()) eksikler.push('grupAdi (metin olmalı)');
-  if (!Array.isArray(veri.uyeler) || veri.uyeler.length === 0) eksikler.push('uyeler (liste olmalı)');
-  if (typeof veri.pistteMi !== 'boolean') eksikler.push('pistteMi (true veya false olmalı, tırnak içinde yazılmamalı)');
-  if (typeof veri.aracEmoji !== 'string' || !veri.aracEmoji.trim()) eksikler.push('aracEmoji (boş olamaz)');
-  if (typeof veri.renk !== 'string' || !veri.renk.trim()) eksikler.push('renk (boş olamaz)');
-  if (typeof veri.slogan !== 'string' || !veri.slogan.trim()) eksikler.push('slogan (boş olamaz)');
-
-  if (eksikler.length > 0) {
-    console.error(`❌ [DOĞRULAMA HATASI] ${dosyaAdi}: Hatalı alanlar -> ${eksikler.join(', ')}`);
+  if (typeof veri.grupAdi !== 'string' || typeof veri.bolgeKodu !== 'string' || typeof veri.aktif !== 'boolean') {
+    console.error(`❌ [ŞEMA HATASI] parcalar/${dosyaAdi}: Zorunlu alanlar eksik veya hatalı.`);
     hataSayisi++;
-    raporSatirlari.push(`| \`${dosyaAdi}\` | ${veri.grupAdi || '-'} | ❌ Eksik Alan | ${eksikler.join(', ')} |`);
     continue;
   }
 
-  if (veri.slogan.length > 140) {
-    console.error(`❌ [SLOGAN ÇOK UZUN] ${dosyaAdi}: Slogan en fazla 140 karakter olabilir.`);
-    hataSayisi++;
-    raporSatirlari.push(`| \`${dosyaAdi}\` | ${veri.grupAdi} | ❌ Slogan Uzun | Max 140 karakter |`);
-    continue;
-  }
+  derlenenListe.push(veri);
 
-  if (veri.pistteMi) {
-    pisttekiGrupSayisi++;
-    console.log(`✅ [PİSTTE HAZIR] Grup #${veri.grupNo || '?'} ${veri.grupAdi} (${veri.aracEmoji}) -> "${veri.slogan}"`);
-    raporSatirlari.push(`| \`${dosyaAdi}\` | **${veri.grupAdi}** | 🟢 **Pistte Hazır!** | ${veri.aracEmoji} *"${veri.slogan}"* |`);
+  const barDolu = '█'.repeat(i + 1) + '░'.repeat(9 - i);
+  if (veri.aktif) {
+    aktifParcaSayisi++;
+    console.log(
+      `[${barDolu}] Parça #${veri.parcaNo} (${veri.grupAdi}) -> 🔥 AKTİF: ${veri.bolgeAdi}`
+    );
+    raporSatirlari.push(`| #${veri.parcaNo} | **${veri.grupAdi}** | ${veri.bolgeAdi} | 🔥 **Birleştirildi** |`);
   } else {
-    console.log(`⏳ [GARAJDA BEKLİYOR] Grup #${veri.grupNo || '?'} ${veri.grupAdi} (Henüz PR birleştirilmedi / pistteMi: false)`);
-    raporSatirlari.push(`| \`${dosyaAdi}\` | ${veri.grupAdi} | ⏳ Garajda Bekliyor | ${veri.aracEmoji} *PR Bekleniyor* |`);
+    console.log(
+      `[${barDolu}] Parça #${veri.parcaNo} (${veri.grupAdi}) -> ⏳ BEKLENİYOR (${veri.bolgeAdi})`
+    );
+    raporSatirlari.push(`| #${veri.parcaNo} | ${veri.grupAdi} | ${veri.bolgeAdi} | ⏳ Bekleniyor |`);
   }
 }
 
-// Örnek demo dosyasını da kontrol et
-const demoYolu = path.join(ARACLAR_KLASORU, 'ornek-demo.json');
-if (fs.existsSync(demoYolu)) {
-  try {
-    JSON.parse(fs.readFileSync(demoYolu, 'utf8'));
-    console.log(`\n🌯 [SAFETY CAR] ornek-demo.json (Nohut Dürüm Canlı Kodlama Dosyası) geçerli.`);
-  } catch (err) {
-    console.error(`❌ [JSON HATASI] ornek-demo.json: ${err.message}`);
-    hataSayisi++;
-  }
-}
+// Derlenen veriyi js/derlenen-parcalar.js dosyasına yaz
+const derlemeIcerik = `/**
+ * OTOMATİK DERLENEN ZÜMRÜDÜANKA PARÇA VERİSİ
+ * Son Derleme: ${new Date().toLocaleString('tr-TR')}
+ * Aktif Parça: ${aktifParcaSayisi} / 10
+ */
+window.DERLENEN_ANKA_PARCALARI = ${JSON.stringify(derlenenListe, null, 2)};
+window.ANKA_DERLEME_ZAMANI = ${JSON.stringify(new Date().toLocaleTimeString('tr-TR'))};
+`;
 
-console.log('\n--------------------------------------------------------------');
-console.log(`📊 ÖZET: Toplam 10 Gruptan ${pisttekiGrupSayisi} tanesi başlangıç çizgisinde hazır!`);
-console.log(`🔍 Hata Sayısı: ${hataSayisi}`);
-console.log('--------------------------------------------------------------\n');
+fs.writeFileSync(DERLEME_CIKTI_YOLU, derlemeIcerik, 'utf8');
 
-// GitHub Actions ortamındaysak şık bir Markdown özeti oluştur
-if (process.env.GITHUB_STEP_SUMMARY) {
-  const ozetMd = [
-    `## 🏁 Git Grand Prix - Teknik Muayene Raporu (Nohut Dürüm CI)`,
-    ``,
-    `- **Pistte Hazır Grup Sayısı:** \`${pisttekiGrupSayisi} / 10\``,
-    `- **Teknik Muayene Durumu:** ${hataSayisi === 0 ? '✅ **BAŞARILI (Sıfır Hata)**' : `❌ **BAŞARISIZ (${hataSayisi} Hata Bulundu)**`}`,
-    ``,
-    `| Dosya | Grup Adı | Durum | Araç & Slogan |`,
-    `| :--- | :--- | :--- | :--- |`,
-    ...raporSatirlari,
-    ``
-  ].join('\n');
-
-  try {
-    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, ozetMd, 'utf8');
-  } catch (_) {
-    // Özet yazılamazsa sessizce geç
-  }
-}
-
-if (hataSayisi > 0) {
-  console.error('🚨 Teknik muayene başarısız oldu! Lütfen yukarıdaki JSON hatalarını düzeltip tekrar commit atın.');
-  process.exit(1);
+if (aktifParcaSayisi === 10 && hataSayisi === 0) {
+  console.log(`
+            .       .
+           /|\\     /|\\
+          / | \\   / | \\
+         /  |  \\_/  |  \\
+        /   / \\   / \\   \\
+       /   /   \\_/   \\   \\
+       \\   \\  /   \\  /   /
+        \\   \\/ 🔥  \\/   /
+         \\     /|\\     /
+          \\___/ | \\___/
+              / | \\
+             /  |  \\
+  `);
+  console.log('✨ MUHTEŞEM! 10 GRUBUN TAMAMI BİRLEŞTİRİLDİ! ZÜMRÜDÜANKA KÜLLERİNDEN DOĞDU! ✨');
 } else {
-  console.log('🎉 Tüm araç dosyaları teknik muayeneden başarıyla geçti! Yarışa hazır!');
-  process.exit(0);
+  console.log(`\n📊 DERLEME SONUCU: ${aktifParcaSayisi} / 10 Parça Aktif | Hata: ${hataSayisi}`);
 }
 
+console.log(`📦 Çıktı üretildi: js/derlenen-parcalar.js\n`);
+
+if (process.env.GITHUB_STEP_SUMMARY) {
+  const md = [
+    `## 🔥 Zümrüdüanka (The Git Phoenix) - Derleme Raporu`,
+    `- **Birleşen Parça Sayısı:** \`${aktifParcaSayisi} / 10\``,
+    `- **Durum:** ${hataSayisi === 0 ? '✅ **Derleme Başarılı**' : '❌ **Hata Var**'}`,
+    ``,
+    `| Parça | Grup | Anka Kuşu Bölgesi | Durum |`,
+    `| :--- | :--- | :--- | :--- |`,
+    ...raporSatirlari
+  ].join('\n');
+  try {
+    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md, 'utf8');
+  } catch (_) {}
+}
+
+process.exit(hataSayisi > 0 ? 1 : 0);

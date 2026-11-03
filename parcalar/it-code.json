@@ -1,0 +1,19 @@
+{
+  "parcaNo": 2,
+  "kod": "it-code",
+  "grupAdi": "IT Code",
+  "sunumHaftasi": "Hafta 13",
+  "uyeler": [
+    "Yusuf Semih Halis",
+    "İrem İmancı",
+    "Muhammed Uğur Çetinkaya"
+  ],
+  "bolgeAdi": "Asil Baş ve Altın Kraliyet Tacı",
+  "bolgeKodu": "CROWN_HEAD",
+  "aktif": true,
+  "anaRenk": "#fbbf24",
+  "ikincilRenk": "#fef08a",
+  "enerjiSeviyesi": 100,
+  "mühür": "ITCODE-CROWN-02",
+  "mesaj": "Bilgelik tacı ve keskin bakışlar kodlandı!"
+}

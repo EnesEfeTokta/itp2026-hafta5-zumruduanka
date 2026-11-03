@@ -1,0 +1,19 @@
+{
+  "parcaNo": 4,
+  "kod": "tdb",
+  "grupAdi": "TDB",
+  "sunumHaftasi": "Hafta 6",
+  "uyeler": [
+    "Taha Sait Barışkan",
+    "Davut Erdin",
+    "Burak Bostancıoğlu"
+  ],
+  "bolgeAdi": "Sağ İç Kanat ve Alev Omuzları",
+  "bolgeKodu": "RIGHT_INNER_WING",
+  "aktif": true,
+  "anaRenk": "#fb923c",
+  "ikincilRenk": "#fef9c3",
+  "enerjiSeviyesi": 100,
+  "mühür": "TDB-RWING-04",
+  "mesaj": "Sağ iç kanat senkronize edildi, yükseliş başlıyor!"
+}
