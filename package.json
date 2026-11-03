@@ -1,0 +1,13 @@
+{
+  "name": "itp2026-hafta5-git-grand-prix",
+  "version": "1.0.0",
+  "description": "İnternet Tabanlı Programlama - Hafta 5 (Nohut Dürüm Grubu) Git, GitHub ve GitHub Actions Sınıf İçi Yarış Uygulaması",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node scripts/muayene-kontrol.js",
+    "kontrol": "node scripts/muayene-kontrol.js"
+  },
+  "author": "Nohut Dürüm (Tamer Çelik, Faruk Tazeoğlu, Muayad Jumaah)",
+  "license": "MIT"
+}
