@@ -1,0 +1,16 @@
+{
+  "grupNo": 10,
+  "kod": "soy-tech",
+  "grupAdi": "SOY Tech",
+  "sunumHaftasi": "Hafta 4",
+  "uyeler": [
+    "Semih Beyaztaş",
+    "Ozan Hasköy",
+    "Yusuf Çırak"
+  ],
+  "pistteMi": false,
+  "aracEmoji": "⚡",
+  "renk": "#6366f1",
+  "slogan": "Tip güvenli motor, sıfır hata!"
+}
+

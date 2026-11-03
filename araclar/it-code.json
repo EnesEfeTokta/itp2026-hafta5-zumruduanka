@@ -1,0 +1,16 @@
+{
+  "grupNo": 2,
+  "kod": "it-code",
+  "grupAdi": "IT Code",
+  "sunumHaftasi": "Hafta 13",
+  "uyeler": [
+    "Yusuf Semih Halis",
+    "İrem İmancı",
+    "Muhammed Uğur Çetinkaya"
+  ],
+  "pistteMi": false,
+  "aracEmoji": "🚀",
+  "renk": "#3b82f6",
+  "slogan": "Temiz kod, maksimum hız!"
+}
+
