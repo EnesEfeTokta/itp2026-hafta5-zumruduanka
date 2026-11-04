@@ -7,45 +7,37 @@
 
 ---
 
-## 🌟 Projenin Konsepti
+## 📱 TELEFONDAN GİREN GRUPLAR İÇİN HIZLI BAŞLANGIÇ
 
-Git ve GitHub'ın en temel felsefesi, **farklı dallarda (`branch`) ayrı ayrı geliştirilen kod parçalarının birleşerek (`merge`) tek ve kusursuz bir bütünü oluşturmasıdır.**
+👉 **[BURAYA DOKUNARAK 10 GRUBUN KODLARINI VE TELEFON REHBERİNİ AÇIN (`GRUP_KODLARI_VE_TELEFON_REHBERI.md`)](./GRUP_KODLARI_VE_TELEFON_REHBERI.md)**
 
-Bu uygulamada sınıftaki **10 proje grubunun her biri**, efsanevi **Zümrüdüanka Kuşu'nun (Phoenix) bir anatomik parçasına** hayat veren kodu yapıştırıp göndermekten sorumludur. Projeyi derlediğimizde (`npm run derle`) ve çalıştırdığımızda (`npm start`), 10 grubun enerji küreleri ekranda birleşerek **kanat çırpan, kıvılcımlar saçan dev bir Zümrüdüanka** görseli ve animasyonu oluşturur!
+### ⚡ 10 Grup İçin Tek Dokunuşla Dosya & Düzenleme Bağlantıları
 
----
-
-## 🪶 10 Grup ve Hayat Verdikleri Zümrüdüanka Parçaları
-
-| Parça No | Grup Adı | Grup Üyeleri | Hayat Verdiği Zümrüdüanka Bölgesi | Dosya Yolu |
-| :---: | :--- | :--- | :--- | :--- |
-| **1** | **Sudo** | Ahmet Can BOZKURT, Yusufcan KADAĞAN, Enes Efe TOKTA | ❤️ Anka'nın Kalbi ve Kor Çekirdeği | `parcalar/sudo.json` |
-| **2** | **IT Code** | Yusuf Semih Halis, İrem İmancı, Muhammed Uğur Çetinkaya | 👑 Asil Baş ve Altın Kraliyet Tacı | `parcalar/it-code.json` |
-| **3** | **RotBalance** | Umut Talha AKPINAR, Cafer YILDIRIM, Merve YILMAZ | 🔥 Sol İç Kanat ve Alev Omuzları | `parcalar/rotbalance.json` |
-| **4** | **TDB** | Taha Sait Barışkan, Davut Erdin, Burak Bostancıoğlu | 🔥 Sağ İç Kanat ve Alev Omuzları | `parcalar/tdb.json` |
-| **5** | **ITERSOLIS** | İrem Sıla Alav, Şevval Gündoğdu, Yaşar Can Sandallı | ☀️ Sol Güneş Telekleri (Dış Kanat) | `parcalar/itersolis.json` |
-| **6** | **Noctalia** | Muhammed Yusuf Yıldız, Mustafa Aykaç, Aziz Emre Yılmaz | ✨ Sağ Yıldız Telekleri (Dış Kanat) | `parcalar/noctalia.json` |
-| **7** | **404** | Ahsen Nur YILDIRIM, Yeşim YİKİT, İlayda TOPAL | 🛡️ Mistik Göğüs Zırhı ve Boyun Tüyleri | `parcalar/404.json` |
-| **8** | **HAT** | Taha Efendioğlu, Harun Esat İrşi, Ahmet Kerim İnce | ⚡ Plazma Pençeler ve Ateş Dalgası | `parcalar/hat.json` |
-| **9** | **EIB** | Ensar Kibaroğlu, İbrahim Budak, Burak Bahadur | 🦚 Efsanevi Beşli Kuyruk Alevi | `parcalar/eib.json` |
-| **10** | **SOY Tech** | Semih Beyaztaş, Ozan Hasköy, Yusuf Çırak | 🌌 Kutsal Güneş Halesi ve Takımyıldız Aurası | `parcalar/soy-tech.json` |
+| Parça | Grup Adı | Grup Üyeleri | Açılacak Dal (`branch`) | Dosyayı Gör | Tarayıcıda Doğrudan Düzenle |
+| :---: | :--- | :--- | :--- | :---: | :---: |
+| **1** | **Sudo** | Ahmet Can BOZKURT, Yusufcan KADAĞAN, Enes Efe TOKTA | `grup/sudo` | [`parcalar/sudo.json`](./parcalar/sudo.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/sudo.json) |
+| **2** | **IT Code** | Yusuf Semih Halis, İrem İmancı, Muhammed Uğur Çetinkaya | `grup/it-code` | [`parcalar/it-code.json`](./parcalar/it-code.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/it-code.json) |
+| **3** | **RotBalance** | Umut Talha AKPINAR, Cafer YILDIRIM, Merve YILMAZ | `grup/rotbalance` | [`parcalar/rotbalance.json`](./parcalar/rotbalance.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/rotbalance.json) |
+| **4** | **TDB** | Taha Sait Barışkan, Davut Erdin, Burak Bostancıoğlu | `grup/tdb` | [`parcalar/tdb.json`](./parcalar/tdb.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/tdb.json) |
+| **5** | **ITERSOLIS** | İrem Sıla Alav, Şevval Gündoğdu, Yaşar Can Sandallı | `grup/itersolis` | [`parcalar/itersolis.json`](./parcalar/itersolis.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/itersolis.json) |
+| **6** | **Noctalia** | Muhammed Yusuf Yıldız, Mustafa Aykaç, Aziz Emre Yılmaz | `grup/noctalia` | [`parcalar/noctalia.json`](./parcalar/noctalia.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/noctalia.json) |
+| **7** | **404** | Ahsen Nur YILDIRIM, Yeşim YİKİT, İlayda TOPAL | `grup/404` | [`parcalar/404.json`](./parcalar/404.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/404.json) |
+| **8** | **HAT** | Taha Efendioğlu, Harun Esat İrşi, Ahmet Kerim İnce | `grup/hat` | [`parcalar/hat.json`](./parcalar/hat.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/hat.json) |
+| **9** | **EIB** | Ensar Kibaroğlu, İbrahim Budak, Burak Bahadur | `grup/eib` | [`parcalar/eib.json`](./parcalar/eib.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/eib.json) |
+| **10** | **SOY Tech** | Semih Beyaztaş, Ozan Hasköy, Yusuf Çırak | `grup/soy-tech` | [`parcalar/soy-tech.json`](./parcalar/soy-tech.json) | [✏️ Düzenle](https://github.com/Faruk-T/itp2026-hafta5-zumruduanka/edit/main/parcalar/soy-tech.json) |
 
 ---
 
-## 🚀 Projeyi Derleme ve Çalıştırma Komutları
+## 📱 Telefondan 2 Farklı Yöntemle Branch ve PR Açma
 
-Terminalde aşağıdaki komutları kullanabilirsiniz:
+### Yöntem A: GitHub Mobil Uygulaması (App) Kullananlar İçin
+1. Önce **[`GRUP_KODLARI_VE_TELEFON_REHBERI.md`](./GRUP_KODLARI_VE_TELEFON_REHBERI.md)** dosyasından kendi grubunuzun kodunu kopyalayın.
+2. Deponun ana sayfasında **`main` (Branches / Dallar)** düğmesine dokunun, sağ üstteki **`+`** simgesine basıp **`grup/grup-adiniz`** (örn. `grup/sudo`) adıyla **yeni bir branch (dal)** oluşturun.
+3. Yeni oluşturduğunuz dal seçiliyken `parcalar/<grup>.json` dosyasını açın, **sağ üst köşedeki `⋮` (üç nokta)** simgesine dokunup **"Edit file" (Dosyayı düzenle)** seçeneğine basın.
+4. Eski kodu silip kopyaladığınız kodu yapıştırın, sağ üstteki **`✓` (Kaydet / Commit)** tuşuna basın ve çıkan **"Create Pull Request"** düğmesine dokunun!
 
-```bash
-# 1) 10 grubun parça kodlarını derle (js/derlenen-parcalar.js üretir)
-npm run derle
-
-# 2) Projeyi derle ve yerel sunucuyu başlat (http://localhost:3000)
-npm start
-
-# 3) Sınıf etkinliği başında Anka Kuşu'nu 0/10 (Kül) durumuna sıfırla
-npm run sifirla
-
-# 4) Tüm 10 grubun parçasını tek komutla aktif et (10/10 Tam Doğuş)
-npm run tamamla
-```
+### Yöntem B: Telefon Tarayıcısı (Chrome / Safari) Kullananlar İçin
+1. Önce **[`GRUP_KODLARI_VE_TELEFON_REHBERI.md`](./GRUP_KODLARI_VE_TELEFON_REHBERI.md)** dosyasından kendi grubunuzun kodunu kopyalayın.
+2. Yukarıdaki tablodan grubunuzun karşısındaki **[✏️ Düzenle]** bağlantısına dokunun.
+3. Eski kodu silip kopyaladığınız kodu yapıştırın ve yeşil **"Commit changes..."** düğmesine dokunun.
+4. Açılan pencerede **"Create a new branch for this commit and start a pull request"** seçeneğini işaretleyip dal adına `grup/sudo` yazın ve **Create pull request** tuşuna basın!
