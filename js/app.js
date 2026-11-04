@@ -580,39 +580,101 @@ function portalIceriginiGuncelle() {
 }
 
 // =========================================================================
-// GERÇEK DOSYALARI OKU (parcalar/*.json veya /api/parcalar)
+// GERÇEK DOSYALARI OKU (GitHub Canlı Senkronizasyonu + parcalar/*.json)
 // =========================================================================
-async function gercekDosyalariOku(animasyonOynat = false) {
-  if (window.location.protocol !== 'file:') {
-    let okundu = false;
+const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/Faruk-T/itp2026-hafta5-zumruduanka/main/parcalar';
+
+function bosVeriSablonuUret(sablon) {
+  return {
+    ...sablon,
+    aktif: false,
+    enerjiSeviyesi: 0,
+    mühür: 'BEKLENIYOR',
+    mesaj: `Bu parça henüz uyandırılmadı. ${sablon.grupAdi} grubunun PR göndermesi bekleniyor...`
+  };
+}
+
+async function gercekDosyalariOku(animasyonOynat = false, sessizKontrol = false) {
+  const oncekiAktifSayisi = parcalar.filter((p) => p.aktif).length;
+  const yeniParcalar = [];
+  let basariliOkuma = false;
+
+  // 1) Önce doğrudan GitHub'daki canlı main dalından (raw.githubusercontent.com) oku
+  try {
+    const istekler = GRUP_UYANDIRMA_SABLONLARI.map(async (sablon) => {
+      const res = await fetch(`${GITHUB_RAW_BASE}/${sablon.kod}.json?t=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) throw new Error('GitHub raw okunamadi');
+      const ham = (await res.text()).trim();
+      if (!ham || ham === '{}') {
+        return bosVeriSablonuUret(sablon);
+      }
+      const parsed = JSON.parse(ham);
+      if (typeof parsed.aktif === 'boolean' && parsed.grupAdi) {
+        return parsed;
+      }
+      return bosVeriSablonuUret(sablon);
+    });
+    const sonuclar = await Promise.all(istekler);
+    if (sonuclar.length === 10) {
+      for (let i = 0; i < 10; i++) yeniParcalar[i] = sonuclar[i];
+      basariliOkuma = true;
+    }
+  } catch (_) {}
+
+  // 2) Eğer internet yoksa veya GitHub raw erişilemediyse yerel sunucudan (/api/parcalar veya parcalar/*.json) oku
+  if (!basariliOkuma && window.location.protocol !== 'file:') {
     try {
       const apiRes = await fetch(`/api/parcalar?t=${Date.now()}`, { cache: 'no-store' });
       if (apiRes.ok) {
         const veri = await apiRes.json();
         if (veri && Array.isArray(veri.parcalar)) {
-          parcalar = veri.parcalar;
-          okundu = true;
+          for (let i = 0; i < veri.parcalar.length; i++) yeniParcalar[i] = veri.parcalar[i];
+          basariliOkuma = true;
         }
       }
     } catch (_) {}
 
-    if (!okundu) {
-      for (let i = 0; i < parcalar.length; i++) {
-        const kod = parcalar[i].kod;
+    if (!basariliOkuma) {
+      for (let i = 0; i < GRUP_UYANDIRMA_SABLONLARI.length; i++) {
+        const sablon = GRUP_UYANDIRMA_SABLONLARI[i];
         try {
-          const res = await fetch(`parcalar/${kod}.json?t=${Date.now()}`, { cache: 'no-store' });
+          const res = await fetch(`parcalar/${sablon.kod}.json?t=${Date.now()}`, { cache: 'no-store' });
           if (res.ok) {
-            parcalar[i] = await res.json();
+            const ham = (await res.text()).trim();
+            if (!ham || ham === '{}') {
+              yeniParcalar[i] = bosVeriSablonuUret(sablon);
+            } else {
+              yeniParcalar[i] = JSON.parse(ham);
+            }
+            basariliOkuma = true;
+          } else {
+            yeniParcalar[i] = bosVeriSablonuUret(sablon);
           }
-        } catch (_) {}
+        } catch (_) {
+          yeniParcalar[i] = bosVeriSablonuUret(sablon);
+        }
       }
     }
-  } else if (Array.isArray(window.DERLENEN_ANKA_PARCALARI)) {
-    parcalar = JSON.parse(JSON.stringify(window.DERLENEN_ANKA_PARCALARI));
   }
 
-  sahneyiGuncelle();
-  if (animasyonOynat) {
+  if (basariliOkuma && yeniParcalar.length === 10) {
+    // Yeni aktifleşen grup var mı kontrol et
+    const yeniAktiflesenler = yeniParcalar.filter((yp, idx) => yp.aktif && (!parcalar[idx] || !parcalar[idx].aktif));
+    parcalar = yeniParcalar;
+    sahneyiGuncelle();
+
+    if (yeniAktiflesenler.length > 0) {
+      yeniAktiflesenler.forEach((yp) => {
+        bildirimGoster(`🔥 YENİ PR BİRLEŞTİ! ${yp.grupAdi} grubu "${yp.bolgeAdi}" parçasını uyandırdı!`);
+      });
+      sinematikDogusAnimasyonuBaslat();
+      return;
+    }
+  } else {
+    sahneyiGuncelle();
+  }
+
+  if (animasyonOynat && !sessizKontrol) {
     sinematikDogusAnimasyonuBaslat();
   }
 }
@@ -665,4 +727,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   gercekDosyalariOku(false);
+
+  // Canlı GitHub senkronizasyonu: her 4 saniyede bir GitHub'daki main dalını kontrol et!
+  // Bir PR Merge edildiği anda sayfayı yenilemeye bile gerek kalmadan ilgili parçayı ateşle!
+  setInterval(() => {
+    gercekDosyalariOku(false, true);
+  }, 4000);
 });

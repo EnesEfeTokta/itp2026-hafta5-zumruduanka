@@ -65,17 +65,11 @@ const server = http.createServer(async (req, res) => {
   // =========================================================================
   if (pathname === '/api/parcalar' && req.method === 'GET') {
     try {
-      const dosyalar = fs.readdirSync(PARCALAR_DIR).filter((f) => f.endsWith('.json'));
-      const liste = [];
-      for (const dosya of dosyalar) {
-        try {
-          const icerik = JSON.parse(fs.readFileSync(path.join(PARCALAR_DIR, dosya), 'utf8'));
-          liste.push(icerik);
-        } catch (err) {
-          liste.push({ dosya, hata: err.message });
-        }
-      }
-      liste.sort((a, b) => (a.parcaNo || 99) - (b.parcaNo || 99));
+      await runCommand('node scripts/muayene-kontrol.js');
+      const derlenenYol = path.join(ROOT_DIR, 'js', 'derlenen-parcalar.js');
+      const ham = fs.readFileSync(derlenenYol, 'utf8');
+      const eslesme = ham.match(/window\.DERLENEN_ANKA_PARCALARI\s*=\s*(\[[\s\S]*?\]);/);
+      const liste = eslesme ? JSON.parse(eslesme[1]) : [];
       return sendJson(res, 200, { sunucuAktif: true, parcalar: liste });
     } catch (err) {
       return sendJson(res, 500, { hata: err.message });
