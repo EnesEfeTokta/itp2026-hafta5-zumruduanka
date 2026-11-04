@@ -582,7 +582,9 @@ function portalIceriginiGuncelle() {
 // =========================================================================
 // GERÇEK DOSYALARI OKU (GitHub Canlı Senkronizasyonu + parcalar/*.json)
 // =========================================================================
-const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/Faruk-T/itp2026-hafta5-zumruduanka/main/parcalar';
+const GITHUB_API_COMMITS = 'https://api.github.com/repos/Faruk-T/itp2026-hafta5-zumruduanka/commits/main';
+const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/Faruk-T/itp2026-hafta5-zumruduanka';
+let sonBilinenCommitSha = '';
 
 function bosVeriSablonuUret(sablon) {
   return {
@@ -595,14 +597,31 @@ function bosVeriSablonuUret(sablon) {
 }
 
 async function gercekDosyalariOku(animasyonOynat = false, sessizKontrol = false) {
-  const oncekiAktifSayisi = parcalar.filter((p) => p.aktif).length;
   const yeniParcalar = [];
   let basariliOkuma = false;
 
-  // 1) Önce doğrudan GitHub'daki canlı main dalından (raw.githubusercontent.com) oku
+  // 1) Önce GitHub API'den en güncel commit SHA'sını al (CDN önbelleğini %100 aşar!)
+  try {
+    const commitRes = await fetch(`${GITHUB_API_COMMITS}?t=${Date.now()}`, {
+      cache: 'no-store',
+      headers: { Accept: 'application/vnd.github.v3+json' }
+    });
+    if (commitRes.ok) {
+      const commitVeri = await commitRes.json();
+      if (commitVeri && commitVeri.sha) {
+        sonBilinenCommitSha = commitVeri.sha;
+      }
+    }
+  } catch (_) {}
+
+  const refDal = sonBilinenCommitSha || 'main';
+
+  // 2) En güncel commit SHA üzerinden dosyaları oku (0 saniye gecikme, sıfır önbellek!)
   try {
     const istekler = GRUP_UYANDIRMA_SABLONLARI.map(async (sablon) => {
-      const res = await fetch(`${GITHUB_RAW_BASE}/${sablon.kod}.json?t=${Date.now()}`, { cache: 'no-store' });
+      const res = await fetch(`${GITHUB_RAW_BASE}/${refDal}/parcalar/${sablon.kod}.json?t=${Date.now()}`, {
+        cache: 'no-store'
+      });
       if (!res.ok) throw new Error('GitHub raw okunamadi');
       const ham = (await res.text()).trim();
       if (!ham || ham === '{}') {
@@ -621,7 +640,7 @@ async function gercekDosyalariOku(animasyonOynat = false, sessizKontrol = false)
     }
   } catch (_) {}
 
-  // 2) Eğer internet yoksa veya GitHub raw erişilemediyse yerel sunucudan (/api/parcalar veya parcalar/*.json) oku
+  // 3) Eğer internet yoksa veya GitHub erişilemediyse yerel sunucudan (/api/parcalar veya parcalar/*.json) oku
   if (!basariliOkuma && window.location.protocol !== 'file:') {
     try {
       const apiRes = await fetch(`/api/parcalar?t=${Date.now()}`, { cache: 'no-store' });
@@ -658,9 +677,18 @@ async function gercekDosyalariOku(animasyonOynat = false, sessizKontrol = false)
   }
 
   if (basariliOkuma && yeniParcalar.length === 10) {
-    // Yeni aktifleşen grup var mı kontrol et
     const yeniAktiflesenler = yeniParcalar.filter((yp, idx) => yp.aktif && (!parcalar[idx] || !parcalar[idx].aktif));
+    const yeniAktifSayisi = yeniParcalar.filter((yp) => yp.aktif).length;
+
     parcalar = yeniParcalar;
+
+    // Eğer tüm parçalar sıfırlandıysa (0/10), ekrandaki eski kıvılcım ve küreleri de temizle
+    if (yeniAktifSayisi === 0) {
+      kivilcimlar = [];
+      enerjiKureleri = [];
+      sokDalgalari = [];
+    }
+
     sahneyiGuncelle();
 
     if (yeniAktiflesenler.length > 0) {
