@@ -190,8 +190,8 @@ function aktifVeriUret(sablon) {
 if (arg === '--sifirla') {
   for (const dosyaAdi of BEKLENEN_PARCALAR) {
     const tamYol = path.join(PARCALAR_KLASORU, dosyaAdi);
-    // Grupların md dosyasından kopyaladıkları kodu doğrudan boş ekrana yapıştırabilmeleri için dosyaları tamamen boşaltıyoruz
-    fs.writeFileSync(tamYol, '', 'utf8');
+    // GitHub Mobile uygulamasının "Edit file" butonunu göstermesi için en az 1 karakter ("{}") bulunmalıdır
+    fs.writeFileSync(tamYol, '{}\n', 'utf8');
   }
 } else if (arg === '--tamamla') {
   for (const dosyaAdi of BEKLENEN_PARCALAR) {

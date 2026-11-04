@@ -1,6 +1,6 @@
 /**
  * OTOMATİK DERLENEN ZÜMRÜDÜANKA PARÇA VERİSİ
- * Son Derleme: 05.11.2026 01:43:59
+ * Son Derleme: 05.11.2026 01:48:32
  * Aktif Parça: 0 / 10
  */
 window.DERLENEN_ANKA_PARCALARI = [
@@ -195,4 +195,4 @@ window.DERLENEN_ANKA_PARCALARI = [
     "mesaj": "Bu parça henüz uyandırılmadı. SOY Tech grubunun PR göndermesi bekleniyor..."
   }
 ];
-window.ANKA_DERLEME_ZAMANI = "01:43:59";
+window.ANKA_DERLEME_ZAMANI = "01:48:32";
