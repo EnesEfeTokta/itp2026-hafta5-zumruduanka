@@ -10,10 +10,10 @@
   ],
   "bolgeAdi": "Anka'nın Kalbi ve Kor Çekirdeği",
   "bolgeKodu": "CORE_HEART",
-  "aktif": true,
+  "aktif": false,
   "anaRenk": "#ff2a5f",
   "ikincilRenk": "#ffbe0b",
-  "enerjiSeviyesi": 100,
-  "mühür": "SUDO-CORE-01",
-  "mesaj": "Root yetkisiyle Anka'nın kalbine yaşam ateşi verildi!"
+  "enerjiSeviyesi": 0,
+  "mühür": "BEKLENIYOR",
+  "mesaj": "Bu parça henüz uyandırılmadı. Sudo grubunun PR göndermesi bekleniyor..."
 }

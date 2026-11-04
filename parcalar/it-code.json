@@ -10,10 +10,10 @@
   ],
   "bolgeAdi": "Asil Baş ve Altın Kraliyet Tacı",
   "bolgeKodu": "CROWN_HEAD",
-  "aktif": true,
+  "aktif": false,
   "anaRenk": "#fbbf24",
   "ikincilRenk": "#fef08a",
-  "enerjiSeviyesi": 100,
-  "mühür": "ITCODE-CROWN-02",
-  "mesaj": "Bilgelik tacı ve keskin bakışlar kodlandı!"
+  "enerjiSeviyesi": 0,
+  "mühür": "BEKLENIYOR",
+  "mesaj": "Bu parça henüz uyandırılmadı. IT Code grubunun PR göndermesi bekleniyor..."
 }

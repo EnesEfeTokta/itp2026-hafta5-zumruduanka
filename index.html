@@ -26,25 +26,17 @@
     </div>
 
     <div class="action-buttons">
-      <div class="energy-counter" id="energyCounterBadge">
+      <div class="energy-counter" id="energyCounterBadge" title="parcalar/*.json dosyalarından derlenen gerçek aktif parça sayısı">
         <span class="spark-dot"></span>
-        <span>Birleşen Parça: <strong id="activePartsCount">10 / 10</strong></span>
+        <span>PR ile Birleşen Parça: <strong id="activePartsCount">0 / 10</strong></span>
       </div>
 
-      <button class="btn btn-fire" id="compileAndAwakenBtn" title="Tüm grup kodlarını derle ve sinematik doğuş animasyonunu başlat!">
-        🔥 Kodları Derle &amp; Anka'yı Uyandır!
+      <button class="btn btn-fire" id="compileAndAwakenBtn" title="Derlenen parcalar/*.json dosyalarını yeniden oku ve doğuş animasyonunu oynat">
+        🔄 Derlenen Kodları Oku &amp; Anka'yı Uyandır
       </button>
 
       <button class="btn btn-portal" id="togglePortalBtn">
-        🪶 Grup Kodu Yapıştır / Gönder
-      </button>
-
-      <button class="btn btn-ghost" id="resetToAshesBtn" title="Sınıf etkinliği başlangıcı için tüm parçaları 0/10 (Kül) durumuna sıfırla">
-        🌑 Küllere Dön (0/10)
-      </button>
-
-      <button class="btn btn-ghost" id="activateAllBtn" title="Tüm 10 grubun parçasını aktif et (10/10)">
-        ✨ Tamamla (10/10)
+        📱 Telefondan PR Rehberi &amp; 10 Grup Kodu
       </button>
 
       <button class="btn btn-ghost" id="soundBtn" title="Mistik Ses Efektlerini Aç/Kapat">
@@ -66,7 +58,7 @@
   <!-- MERKEZ SAHNE: ÇOK KATMANLI HAREKETLİ ZÜMRÜDÜANKA VE 10 GRUP HALESİ     -->
   <!-- ===================================================================== -->
   <main class="stage-container">
-    <!-- Sol ve Sağ 10 Grup Takımyıldız Mühürleri (5 Sol Kanatta, 5 Sağ Kanatta) -->
+    <!-- Sol Sütun: Grup 1..5 Takımyıldız Mühürleri -->
     <aside class="constellation-column left-column" id="leftConstellation">
       <!-- JS ile Grup 1..5 kartları oluşturulur -->
     </aside>
@@ -76,8 +68,8 @@
       <!-- Doğuş Başlığı / Durum Afişi -->
       <div class="phoenix-status-banner" id="phoenixStatusBanner">
         <span class="status-crown">✨ KÜLLERİNDEN DOĞAN KOD EFSANESİ ✨</span>
-        <h2 id="phoenixMainTitle">10 GRUP BİRLEŞTİ — ZÜMRÜDÜANKA UYANDI!</h2>
-        <p id="phoenixSubTitle">Her grubun gönderdiği kod parçası (`commit &amp; merge`) Anka Kuşu'nun bir uzvuna hayat verdi.</p>
+        <h2 id="phoenixMainTitle">ANKA KUŞU KÜLLERİNDE UYUYOR (0 / 10 PARÇA)</h2>
+        <p id="phoenixSubTitle">Gruplar GitHub üzerinden kendi dalını (`branch`) açıp PR gönderdikçe ve kodlar derlendikçe Zümrüdüanka uyanacak!</p>
       </div>
 
       <!-- Çok Katmanlı İnteraktif SVG Zümrüdüanka -->
@@ -161,15 +153,12 @@
             </radialGradient>
           </defs>
 
-          <!-- =============================================================== -->
-          <!-- PARÇA 10: SOY Tech — Kutsal Güneş Halesi & Kozmik Geometri      -->
-          <!-- =============================================================== -->
+          <!-- PARÇA 10: SOY Tech — Kutsal Güneş Halesi -->
           <g id="part-soy-tech" class="phoenix-part halo-group" data-grup="soy-tech">
             <circle cx="600" cy="340" r="270" fill="none" stroke="url(#gradGoldFire)" stroke-width="2.5" stroke-dasharray="14 10" opacity="0.65" />
             <circle cx="600" cy="340" r="225" fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-dasharray="6 8" opacity="0.5" />
             <polygon points="600,45 665,215 845,215 700,320 755,495 600,390 445,495 500,320 355,215 535,215"
               fill="none" stroke="url(#gradGoldFire)" stroke-width="1.6" opacity="0.38" />
-            <!-- Güneş Halesi Işınları -->
             <g stroke="#fde047" stroke-width="2" opacity="0.55">
               <line x1="600" y1="20" x2="600" y2="65" />
               <line x1="825" y1="115" x2="790" y2="150" />
@@ -179,31 +168,21 @@
             </g>
           </g>
 
-          <!-- =============================================================== -->
-          <!-- PARÇA 9: EIB — Efsanevi Beşli Kuyruk Alevi                      -->
-          <!-- =============================================================== -->
+          <!-- PARÇA 9: EIB — Efsanevi Beşli Kuyruk Alevi -->
           <g id="part-eib" class="phoenix-part tail-group" data-grup="eib" filter="url(#fireGlow)">
-            <!-- Merkez Ana Kuyruk -->
             <path d="M 600 470 C 580 575, 625 685, 600 830 C 618 690, 620 575, 600 470 Z" fill="url(#gradTail)" />
-            <!-- Sol İç Kuyruk Şeridi -->
             <path d="M 588 465 C 535 565, 495 675, 435 805 C 515 695, 560 585, 600 475 Z" fill="url(#gradGoldFire)" opacity="0.92" />
-            <!-- Sağ İç Kuyruk Şeridi -->
             <path d="M 612 465 C 665 565, 705 675, 765 805 C 685 695, 640 585, 600 475 Z" fill="url(#gradGoldFire)" opacity="0.92" />
-            <!-- Sol Dış Kuyruk Şeridi -->
             <path d="M 575 455 C 490 540, 415 630, 330 745 C 435 655, 515 560, 590 468 Z" fill="url(#gradTail)" opacity="0.82" />
-            <!-- Sağ Dış Kuyruk Şeridi -->
             <path d="M 625 455 C 710 540, 785 630, 870 745 C 765 655, 685 560, 610 468 Z" fill="url(#gradTail)" opacity="0.82" />
-            <!-- Kuyruk Göz Damlası Mücevherleri -->
             <circle cx="600" cy="770" r="8" fill="#fef08a" />
             <circle cx="465" cy="755" r="7" fill="#34d399" />
             <circle cx="735" cy="755" r="7" fill="#34d399" />
           </g>
 
-          <!-- =============================================================== -->
-          <!-- SOL KANAT BÜTÜNÜ (Kanat Çırpma Animasyonu İçin Tek Grup)        -->
-          <!-- =============================================================== -->
+          <!-- SOL KANAT -->
           <g class="wing-left-animator">
-            <!-- PARÇA 5: ITERSOLIS — Sol Güneş Telekleri (7 Dev Dış Telek) -->
+            <!-- PARÇA 5: ITERSOLIS — Sol Güneş Telekleri -->
             <g id="part-itersolis" class="phoenix-part" data-grup="itersolis" filter="url(#fireGlow)">
               <path d="M 480 310 C 330 220, 175 130, 35 75 C 125 165, 275 265, 455 340 Z" fill="url(#gradOuterLeft)" />
               <path d="M 465 330 C 300 265, 145 200, 20 165 C 120 235, 270 305, 445 360 Z" fill="url(#gradOuterLeft)" opacity="0.95" />
@@ -213,22 +192,19 @@
               <path d="M 468 412 C 360 430, 260 455, 180 490 C 275 480, 375 455, 475 430 Z" fill="url(#gradOuterLeft)" opacity="0.75" />
             </g>
 
-            <!-- PARÇA 3: RotBalance — Sol İç Kanat ve Alev Omuzları -->
+            <!-- PARÇA 3: RotBalance — Sol İç Kanat -->
             <g id="part-rotbalance" class="phoenix-part" data-grup="rotbalance" filter="url(#fireGlow)">
               <path d="M 565 310 C 455 215, 295 160, 145 140 C 235 225, 365 290, 525 365 Z" fill="url(#gradLeftWing)" />
               <path d="M 555 340 C 440 275, 300 245, 175 240 C 265 300, 385 340, 535 390 Z" fill="url(#gradLeftWing)" opacity="0.92" />
               <path d="M 550 370 C 445 335, 330 330, 225 345 C 315 375, 420 395, 545 415 Z" fill="url(#gradLeftWing)" opacity="0.88" />
-              <!-- Kanat İçi Altın Damar Çizgileri -->
               <path d="M 555 325 Q 380 240 190 185" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.8" />
               <path d="M 545 355 Q 390 300 230 275" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.7" />
             </g>
           </g>
 
-          <!-- =============================================================== -->
-          <!-- SAĞ KANAT BÜTÜNÜ (Kanat Çırpma Animasyonu İçin Tek Grup)        -->
-          <!-- =============================================================== -->
+          <!-- SAĞ KANAT -->
           <g class="wing-right-animator">
-            <!-- PARÇA 6: Noctalia — Sağ Yıldız Telekleri (7 Dev Dış Telek) -->
+            <!-- PARÇA 6: Noctalia — Sağ Yıldız Telekleri -->
             <g id="part-noctalia" class="phoenix-part" data-grup="noctalia" filter="url(#fireGlow)">
               <path d="M 720 310 C 870 220, 1025 130, 1165 75 C 1075 165, 925 265, 745 340 Z" fill="url(#gradOuterRight)" />
               <path d="M 735 330 C 900 265, 1055 200, 1180 165 C 1080 235, 930 305, 755 360 Z" fill="url(#gradOuterRight)" opacity="0.95" />
@@ -238,68 +214,50 @@
               <path d="M 732 412 C 840 430, 940 455, 1020 490 C 925 480, 825 455, 725 430 Z" fill="url(#gradOuterRight)" opacity="0.75" />
             </g>
 
-            <!-- PARÇA 4: TDB — Sağ İç Kanat ve Alev Omuzları -->
+            <!-- PARÇA 4: TDB — Sağ İç Kanat -->
             <g id="part-tdb" class="phoenix-part" data-grup="tdb" filter="url(#fireGlow)">
               <path d="M 635 310 C 745 215, 905 160, 1055 140 C 965 225, 835 290, 675 365 Z" fill="url(#gradRightWing)" />
               <path d="M 645 340 C 760 275, 900 245, 1025 240 C 935 300, 815 340, 665 390 Z" fill="url(#gradRightWing)" opacity="0.92" />
               <path d="M 650 370 C 755 335, 870 330, 975 345 C 885 375, 780 395, 655 415 Z" fill="url(#gradRightWing)" opacity="0.88" />
-              <!-- Kanat İçi Altın Damar Çizgileri -->
               <path d="M 645 325 Q 820 240 1010 185" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.8" />
               <path d="M 655 355 Q 810 300 970 275" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.7" />
             </g>
           </g>
 
-          <!-- =============================================================== -->
-          <!-- PARÇA 8: HAT — Plazma Pençeler ve Ateş Dalgası                  -->
-          <!-- =============================================================== -->
+          <!-- PARÇA 8: HAT — Plazma Pençeler -->
           <g id="part-hat" class="phoenix-part talons-group" data-grup="hat" filter="url(#fireGlow)">
-            <!-- Enerji Halkası -->
             <ellipse cx="600" cy="510" rx="95" ry="24" fill="none" stroke="#38bdf8" stroke-width="3" opacity="0.75" />
             <ellipse cx="600" cy="510" rx="65" ry="14" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.85" />
-            <!-- Sol ve Sağ Altın Pençeler -->
             <path d="M 565 450 L 540 500 L 555 495 L 550 515 L 572 485 Z" fill="#fef08a" stroke="#06b6d4" stroke-width="1.5" />
             <path d="M 635 450 L 660 500 L 645 495 L 650 515 L 628 485 Z" fill="#fef08a" stroke="#06b6d4" stroke-width="1.5" />
           </g>
 
-          <!-- =============================================================== -->
-          <!-- PARÇA 7: 404 — Mistik Göğüs Zırhı ve Boyun Tüyleri              -->
-          <!-- =============================================================== -->
+          <!-- PARÇA 7: 404 — Mistik Göğüs Zırhı -->
           <g id="part-404" class="phoenix-part armor-group" data-grup="404" filter="url(#fireGlow)">
-            <!-- Ana Gövde ve Boyun Silüeti -->
             <path d="M 600 205 C 565 245, 540 315, 548 395 C 555 445, 578 480, 600 495 C 622 480, 645 445, 652 395 C 660 315, 635 245, 600 205 Z"
               fill="url(#gradBodyArmor)" stroke="#fde047" stroke-width="1.5" />
-            <!-- Göğüs Zırhı Katmanlı Telek Desenleri -->
             <path d="M 565 310 Q 600 340 635 310" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.85" />
             <path d="M 556 345 Q 600 380 644 345" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.85" />
             <path d="M 560 380 Q 600 415 640 380" fill="none" stroke="#fef08a" stroke-width="2.5" opacity="0.85" />
             <path d="M 570 415 Q 600 445 630 415" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.75" />
           </g>
 
-          <!-- =============================================================== -->
-          <!-- PARÇA 1: Sudo — Anka'nın Kalbi ve Kor Çekirdeği                 -->
-          <!-- =============================================================== -->
+          <!-- PARÇA 1: Sudo — Anka'nın Kalbi -->
           <g id="part-sudo" class="phoenix-part heart-group" data-grup="sudo" filter="url(#intenseGlow)">
             <circle cx="600" cy="348" r="46" fill="url(#gradHeartCore)" />
-            <!-- Elmas Kalp Kristali -->
             <polygon points="600,312 626,348 600,384 574,348" fill="#ffffff" stroke="#ff2a5f" stroke-width="3" />
             <circle cx="600" cy="348" r="10" fill="#fef08a" />
           </g>
 
-          <!-- =============================================================== -->
-          <!-- PARÇA 2: IT Code — Asil Baş ve Altın Kraliyet Tacı              -->
-          <!-- =============================================================== -->
+          <!-- PARÇA 2: IT Code — Asil Baş ve Altın Kraliyet Tacı -->
           <g id="part-it-code" class="phoenix-part head-group" data-grup="it-code" filter="url(#fireGlow)">
-            <!-- 5'li Altın Kraliyet Tacı Telekleri -->
             <path d="M 600 165 C 595 115, 600 75, 600 45 C 608 80, 608 120, 600 165 Z" fill="#fef08a" />
             <path d="M 590 170 C 570 125, 550 95, 530 70 C 558 100, 578 135, 594 172 Z" fill="url(#gradGoldFire)" />
             <path d="M 610 170 C 630 125, 650 95, 670 70 C 642 100, 622 135, 606 172 Z" fill="url(#gradGoldFire)" />
             <path d="M 582 180 C 552 150, 525 130, 495 118 C 530 138, 558 160, 586 184 Z" fill="url(#gradGoldFire)" opacity="0.9" />
             <path d="M 618 180 C 648 150, 675 130, 705 118 C 670 138, 642 160, 614 184 Z" fill="url(#gradGoldFire)" opacity="0.9" />
-
-            <!-- Baş ve Keskin Gaga -->
             <path d="M 600 155 C 575 165, 568 195, 582 220 L 600 248 L 618 220 C 632 195, 625 165, 600 155 Z"
               fill="url(#gradGoldFire)" stroke="#fef9c3" stroke-width="2" />
-            <!-- Parlayan Gözler -->
             <polygon points="584,192 595,198 586,203" fill="#ffffff" />
             <polygon points="616,192 605,198 614,203" fill="#ffffff" />
           </g>
@@ -309,7 +267,7 @@
       <!-- Alt İmza ve Seçili Parça Bilgi Çubuğu -->
       <div class="phoenix-footer-bar" id="phoenixFooterBar">
         <span id="hoveredPartInfo">
-          🔥 <strong>İpucu:</strong> Yanlardaki 10 grup mührünün veya Anka Kuşu'nun uzuvlarının üzerine gelerek hangi grubun hangi parçaya hayat verdiğini görebilirsiniz.
+          🔥 <strong>Nasıl Çalışır?</strong> Gruplar telefondan/bilgisayardan GitHub üzerinden kendi <code>parcalar/&lt;grup&gt;.json</code> dosyalarına PR açıp birleştirildikçe ve siz <code>npm run derle</code> çalıştırdıkça ilgili parçalar yanar!
         </span>
       </div>
     </div>
@@ -321,61 +279,58 @@
   </main>
 
   <!-- ===================================================================== -->
-  <!-- GRUP KODU YAPIŞTIRMA & GÖNDERME PORTALI (MODAL / DRAWER)              -->
+  <!-- TELEFONDAN PR AÇMA REHBERİ VE 10 GRUP KODU EKRANI                     -->
   <!-- ===================================================================== -->
   <div class="portal-backdrop hidden" id="portalBackdrop">
     <div class="portal-modal">
       <div class="portal-header">
         <div>
-          <h2>🪶 Zümrüdüanka Grup Kodu Yapıştırma &amp; Birleştirme Portalı</h2>
-          <p>Her gruptan 1 temsilci grubunu seçer, ilgili parça kodunu kutuya yapıştırıp gönderir (veya <code>parcalar/&lt;grup&gt;.json</code> dosyasına commit atar).</p>
+          <h2>📱 Telefondan (veya Bilgisayardan) Branch Açma, Kod Alma ve PR Gönderme Rehberi</h2>
+          <p>Bu rehber hem depodaki <code>GRUP_KODLARI_VE_TELEFON_REHBERI.md</code> dosyasında hem de burada sınıfa göstermeniz için yer alır.</p>
         </div>
         <button class="btn btn-ghost" id="closePortalBtn">✕ Kapat</button>
       </div>
 
       <div class="portal-body">
-        <!-- Sol: 10 Grup Seçici ve Git Komutları -->
+        <!-- Sol: Telefondan 5 Adımda Nasıl Yapılır? -->
         <div class="portal-left">
-          <div class="section-label">1️⃣ Grubunuzu Seçin:</div>
+          <div class="section-label">📱 Telefondan 5 Adımda Branch &amp; PR Nasıl Açılır?</div>
+          <div class="selected-group-card" style="margin-bottom: 10px; line-height: 1.55;">
+            <strong>1️⃣ Kodu Kopyala:</strong> Telefondan GitHub depomuza girin, <code>GRUP_KODLARI_VE_TELEFON_REHBERI.md</code> dosyasını açıp grubunuzun kodunun sağ üstündeki <strong>📋 Copy</strong> tuşuna dokunun.<br/><br/>
+            <strong>2️⃣ Dosyanı Aç:</strong> Depoda <code>parcalar/</code> klasörüne girip kendi grubunuzun dosyasına (<code id="guideFileName">parcalar/sudo.json</code>) dokunun.<br/><br/>
+            <strong>3️⃣ Kalem (✏️) Simgesine Dokun:</strong> Sağ üstteki <strong>✏️ (Edit)</strong> simgesine dokunun, içindeki eski <code>"aktif": false</code> yazısını silip kopyaladığınız kodu <strong>Yapıştırın</strong>.<br/><br/>
+            <strong>4️⃣ Yeni Branch (Dal) Seç &amp; Commit At:</strong> Yeşil <strong>"Commit changes..."</strong> tuşuna basın:<br/>
+            • Commit mesajı: <code id="guideCommitMsg">ozellik(sudo): anka kalbi uyandirildi</code><br/>
+            • Alttan <strong>🔘 Create a new branch for this commit and start a pull request</strong> seçeneğini seçip dal adına <code id="guideBranchName">grup/sudo</code> yazın.<br/><br/>
+            <strong>5️⃣ PR Gönder:</strong> Yeşil <strong>"Propose changes"</strong> → <strong>"Create pull request"</strong> tuşuna basın! (GitHub Actions otomatik test edecek!)
+          </div>
+
+          <div class="selected-group-card" style="border-left-color: #10b981; line-height: 1.5;">
+            <strong>💻 Sunucu Ekibi (Nohut Dürüm) PR'ları Nasıl Derler?</strong><br/>
+            Gruplar PR gönderdikten sonra GitHub'da <strong>Merge pull request</strong> yapın, ardından VS Code terminalinde:<br/>
+            <code>git pull &amp;&amp; npm run derle</code><br/>
+            komutunu çalıştırıp bu sayfayı yenileyin!
+          </div>
+        </div>
+
+        <!-- Sağ: 10 Grubun Alacağı Kodlar -->
+        <div class="portal-right">
+          <div class="section-label">🪶 Grubunuzu Seçin ve Yapıştırılacak Kodu Görün:</div>
           <div class="portal-group-grid" id="portalGroupGrid">
             <!-- JS ile 10 grup butonu oluşturulur -->
           </div>
 
-          <div class="selected-group-card" id="portalSelectedGroupInfo">
+          <div class="selected-group-card" id="portalSelectedGroupInfo" style="margin-bottom: 10px;">
             <!-- JS ile seçilen grubun üyeleri ve Anka bölgesi gösterilir -->
           </div>
 
-          <div class="section-label" style="margin-top:12px;">2️⃣ Grubunuza Özel Hazır Parça Kodu:</div>
-          <div class="template-actions">
-            <button type="button" class="btn btn-sm btn-outline" id="copyTemplateCodeBtn">
-              📋 Bu Kodu Kopyala
-            </button>
-            <button type="button" class="btn btn-sm btn-portal" id="pasteToEditorBtn">
-              ⚡ Sağdaki Kutuya Otomatik Yapıştır →
+          <div class="template-actions" style="justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.8rem; color: #fde68a;">📄 Yapıştırılacak Kod (<code>"aktif": true</code>):</span>
+            <button type="button" class="btn btn-sm btn-portal" id="copyTemplateCodeBtn">
+              📋 Grubun Kodunu Kopyala
             </button>
           </div>
-          <pre class="code-box" id="templateCodeBox"></pre>
-        </div>
-
-        <!-- Sağ: Kod Yapıştırma Alanı ve Gönder Butonu -->
-        <div class="portal-right">
-          <div class="section-label">3️⃣ İlgili Kodu Buraya Yapıştırın ve Gönderin (veya VS Code'da <code>npm run derle</code> çalıştırın):</div>
-          <textarea id="codePasteArea" class="code-textarea" rows="12" placeholder="Grubunuza ait JSON parça kodunu buraya yapıştırın..."></textarea>
-
-          <div class="custom-message-row">
-            <label for="customCommitMsgInput">Grup Ateş Mesajı (İsteğe Bağlı Özelleştirin):</label>
-            <input type="text" id="customCommitMsgInput" placeholder="Örn: Sudo grubu Anka'nın kalbine yaşam ateşi verdi!" />
-          </div>
-
-          <div class="portal-submit-row">
-            <button type="button" class="btn btn-xl btn-fire" id="submitGroupCodeBtn">
-              🔥 Kodu Gönder, Derle ve Parçayı Uyandır!
-            </button>
-          </div>
-
-          <div class="compiler-log-box" id="compilerLogBox">
-            <code>Hazır. Kodu gönderdiğinizde derleyici çıktısı burada görünecek...</code>
-          </div>
+          <pre class="code-box" id="templateCodeBox" style="max-height: 290px;"></pre>
         </div>
       </div>
     </div>

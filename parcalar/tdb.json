@@ -10,10 +10,10 @@
   ],
   "bolgeAdi": "Sağ İç Kanat ve Alev Omuzları",
   "bolgeKodu": "RIGHT_INNER_WING",
-  "aktif": true,
+  "aktif": false,
   "anaRenk": "#fb923c",
   "ikincilRenk": "#fef9c3",
-  "enerjiSeviyesi": 100,
-  "mühür": "TDB-RWING-04",
-  "mesaj": "Sağ iç kanat senkronize edildi, yükseliş başlıyor!"
+  "enerjiSeviyesi": 0,
+  "mühür": "BEKLENIYOR",
+  "mesaj": "Bu parça henüz uyandırılmadı. TDB grubunun PR göndermesi bekleniyor..."
 }

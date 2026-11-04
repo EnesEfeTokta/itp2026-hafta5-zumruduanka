@@ -3,10 +3,12 @@
  * Sunum & Uygulama Grubu: Nohut Dürüm (Tamer Çelik • Faruk Tazeoğlu • Muayad Jumaah)
  * Ders Sorumlusu: Doç. Dr. Hamza POLAT
  *
- * ZÜMRÜDÜANKA (THE GIT PHOENIX) - GÖRSELLEŞTİRME, PARÇACIK VE DERLEME MOTORU
+ * ZÜMRÜDÜANKA (THE GIT PHOENIX) - GÖRSELLEŞTİRME VE PARÇACIK MOTORU
+ * Not: Parçalar elle arayüzden değil, grupların GitHub üzerinden parcalar/*.json
+ * dosyalarına gönderdiği PR'ların derlenmesiyle (npm run derle) aktifleşir!
  */
 
-const VARSAYILAN_PARCALAR = [
+const GRUP_UYANDIRMA_SABLONLARI = [
   {
     parcaNo: 1,
     kod: 'sudo',
@@ -159,14 +161,13 @@ const VARSAYILAN_PARCALAR = [
   }
 ];
 
-// Başlangıç verisini derlenen-parcalar.js'den veya varsayılandan al
+// Derlenen gerçek durumu js/derlenen-parcalar.js dosyasından oku
 let parcalar = Array.isArray(window.DERLENEN_ANKA_PARCALARI)
   ? JSON.parse(JSON.stringify(window.DERLENEN_ANKA_PARCALARI))
-  : JSON.parse(JSON.stringify(VARSAYILAN_PARCALAR));
+  : GRUP_UYANDIRMA_SABLONLARI.map((p) => ({ ...p, aktif: false, enerjiSeviyesi: 0, mühür: 'BEKLENIYOR' }));
 
 let seciliPortalGrupKod = 'sudo';
 let sesAcik = true;
-let yerelSunucuAktif = false;
 
 // =========================================================================
 // MİSTİK SES SENTEZLEYİCİ (Web Audio API)
@@ -188,22 +189,7 @@ function mistikSesCal(tip) {
     if (ctx.state === 'suspended') ctx.resume();
     const now = ctx.currentTime;
 
-    if (tip === 'ignite') {
-      const notalar = [329.63, 440, 659.25];
-      notalar.forEach((f, i) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(f, now + i * 0.08);
-        gain.gain.setValueAtTime(0.11, now + i * 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.45);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now + i * 0.08);
-        osc.stop(now + i * 0.08 + 0.45);
-      });
-    } else if (tip === 'rebirth') {
-      // Epik Zümrüdüanka Doğuş Akoru
+    if (tip === 'rebirth') {
       const akor = [220, 277.18, 329.63, 440, 554.37, 659.25, 880];
       akor.forEach((f, i) => {
         const osc = ctx.createOscillator();
@@ -303,18 +289,20 @@ function patlamaKivilcimlariUret(x, y, renk1 = '#fbbf24', renk2 = '#ff2a5f', ade
   }
 }
 
-// Sinematik Doğuş: 10 Grubun Enerji Küresinin Merkeze Uçup Birleşmesi
 function sinematikDogusAnimasyonuBaslat() {
   if (!canvas) return;
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
 
-  enerjiKureleri = [];
   const aktifler = parcalar.filter((p) => p.aktif);
-  const kaynakListe = aktifler.length > 0 ? aktifler : parcalar;
+  if (aktifler.length === 0) {
+    bildirimGoster('⏳ Henüz hiçbir grubun PR kodu birleştirilmedi (0 / 10).');
+    return;
+  }
 
-  kaynakListe.forEach((p, idx) => {
-    const aci = (idx / kaynakListe.length) * Math.PI * 2 - Math.PI / 2;
+  enerjiKureleri = [];
+  aktifler.forEach((p, idx) => {
+    const aci = (idx / aktifler.length) * Math.PI * 2 - Math.PI / 2;
     const baslangicUzaklik = Math.min(canvas.width, canvas.height) * 0.44;
     enerjiKureleri.push({
       x: cx + Math.cos(aci) * baslangicUzaklik,
@@ -362,7 +350,7 @@ function canvasDongusu() {
     ctx.fill();
   });
 
-  // 2) Sürekli yükselen Zümrüdüanka ateş kıvılcımları
+  // 2) Sürekli yükselen Zümrüdüanka ateş kıvılcımları (Sadece aktif parçalar varsa!)
   const aktifSayi = parcalar.filter((p) => p.aktif).length;
   if (aktifSayi > 0) {
     kivilcimUret(cx, cy + 40, Math.ceil(aktifSayi / 3));
@@ -390,7 +378,7 @@ function canvasDongusu() {
     ctx.restore();
   }
 
-  // 3) Merkeze uçan 10 Grup Enerji Küresi
+  // 3) Merkeze uçan Grup Enerji Küreleri
   for (let i = enerjiKureleri.length - 1; i >= 0; i--) {
     const ek = enerjiKureleri[i];
     ek.ilerleme += ek.hiz;
@@ -417,7 +405,7 @@ function canvasDongusu() {
     ctx.restore();
   }
 
-  // 4) Şok Dalgaları (Merge Patlaması)
+  // 4) Şok Dalgaları
   for (let i = sokDalgalari.length - 1; i >= 0; i--) {
     const sd = sokDalgalari[i];
     sd.r += 14;
@@ -448,11 +436,9 @@ function canvasDongusu() {
 function sahneyiGuncelle() {
   const aktifSayisi = parcalar.filter((p) => p.aktif).length;
 
-  // Üst sayaç
   const countEl = document.getElementById('activePartsCount');
   if (countEl) countEl.textContent = `${aktifSayisi} / 10`;
 
-  // Başlık durumu
   const mainTitle = document.getElementById('phoenixMainTitle');
   const subTitle = document.getElementById('phoenixSubTitle');
   const wrapper = document.getElementById('phoenixSvgWrapper');
@@ -467,16 +453,15 @@ function sahneyiGuncelle() {
     if (mainTitle) mainTitle.textContent = 'ANKA KUŞU KÜLLERİNDE UYUYOR (0 / 10 PARÇA)';
     if (subTitle)
       subTitle.textContent =
-        'Gruplar kendi parça kodlarını yapıştırıp gönderdikçe (veya derledikçe) Zümrüdüanka uyanacak!';
+        'Gruplar telefondan/bilgisayardan GitHub üzerinden kendi dalını (branch) açıp PR gönderdikçe ve derlendikçe Zümrüdüanka uyanacak!';
     wrapper?.classList.remove('awakened');
   } else {
     if (mainTitle) mainTitle.textContent = `ZÜMRÜDÜANKA UYANIYOR (${aktifSayisi} / 10 PARÇA BİRLEŞTİ)`;
     if (subTitle)
-      subTitle.textContent = `Tam doğuş için ${10 - aktifSayisi} grubun daha parça kodunu göndermesi bekleniyor...`;
+      subTitle.textContent = `Tam doğuş için ${10 - aktifSayisi} grubun daha GitHub üzerinden PR göndermesi bekleniyor...`;
     wrapper?.classList.add('awakened');
   }
 
-  // SVG üzerindeki 10 anatomik parçayı aktif/kül durumuna göre güncelle
   parcalar.forEach((p) => {
     const svgPart = document.getElementById(`part-${p.kod}`);
     if (svgPart) {
@@ -484,7 +469,6 @@ function sahneyiGuncelle() {
     }
   });
 
-  // Sol (1..5) ve Sağ (6..10) Takımyıldız Mühür Kartlarını Çiz
   const solCol = document.getElementById('leftConstellation');
   const sagCol = document.getElementById('rightConstellation');
 
@@ -512,7 +496,7 @@ function grupKartHtmlUret(p) {
       <div class="seal-top">
         <span class="seal-title" style="color: ${p.anaRenk}">#${p.parcaNo} ${p.grupAdi}</span>
         <span class="seal-status ${p.aktif ? 'on' : 'off'}">
-          ${p.aktif ? '🔥 Aktif' : '⏳ Bekliyor'}
+          ${p.aktif ? '🔥 Birleşti' : '⏳ PR Bekleniyor'}
         </span>
       </div>
       <div class="seal-part-name">🪶 ${p.bolgeAdi}</div>
@@ -531,12 +515,12 @@ function parcaVurgula(kod, aktifMi) {
   }
 
   if (infoBar && p && aktifMi) {
-    infoBar.innerHTML = `🔥 <strong>Grup #${p.parcaNo} ${p.grupAdi}</strong> (${p.uyeler.join(', ')}) → <strong>${p.bolgeAdi}</strong> | <em>"${p.mesaj}"</em>`;
+    infoBar.innerHTML = `🔥 <strong>Grup #${p.parcaNo} ${p.grupAdi}</strong> (${p.uyeler.join(', ')}) → <strong>${p.bolgeAdi}</strong> | Durum: <strong>${p.aktif ? 'PR Birleştirildi' : 'PR Bekleniyor'}</strong>`;
   }
 }
 
 // =========================================================================
-// GRUP KODU YAPIŞTIRMA & BİRLEŞTİRME PORTALI İŞLEMLERİ
+// TELEFONDAN PR REHBERİ VE 10 GRUP KODU GÖRÜNTÜLEYİCİ
 // =========================================================================
 function portaliAc() {
   portalIceriginiGuncelle();
@@ -551,15 +535,15 @@ function portalIceriginiGuncelle() {
   const grid = document.getElementById('portalGroupGrid');
   if (!grid) return;
 
-  grid.innerHTML = parcalar
-    .map(
-      (p) => `
-    <button type="button" class="portal-group-btn ${p.kod === seciliPortalGrupKod ? 'active' : ''}" data-kod="${p.kod}">
-      #${p.parcaNo} ${p.grupAdi} ${p.aktif ? '🔥' : '⏳'}
-    </button>
-  `
-    )
-    .join('');
+  grid.innerHTML = GRUP_UYANDIRMA_SABLONLARI.map((sablon) => {
+    const canliDurum = parcalar.find((p) => p.kod === sablon.kod);
+    const aktifMi = canliDurum ? canliDurum.aktif : false;
+    return `
+      <button type="button" class="portal-group-btn ${sablon.kod === seciliPortalGrupKod ? 'active' : ''}" data-kod="${sablon.kod}">
+        #${sablon.parcaNo} ${sablon.grupAdi} ${aktifMi ? '🔥' : '⏳'}
+      </button>
+    `;
+  }).join('');
 
   grid.querySelectorAll('.portal-group-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -568,146 +552,68 @@ function portalIceriginiGuncelle() {
     });
   });
 
-  const secili = parcalar.find((p) => p.kod === seciliPortalGrupKod) || parcalar[0];
+  const seciliSablon =
+    GRUP_UYANDIRMA_SABLONLARI.find((s) => s.kod === seciliPortalGrupKod) || GRUP_UYANDIRMA_SABLONLARI[0];
+
+  const guideFile = document.getElementById('guideFileName');
+  const guideCommit = document.getElementById('guideCommitMsg');
+  const guideBranch = document.getElementById('guideBranchName');
+
+  if (guideFile) guideFile.textContent = `parcalar/${seciliSablon.kod}.json`;
+  if (guideCommit) guideCommit.textContent = `ozellik(${seciliSablon.kod}): anka parcasi uyandirildi`;
+  if (guideBranch) guideBranch.textContent = `grup/${seciliSablon.kod}`;
+
   const infoCard = document.getElementById('portalSelectedGroupInfo');
   if (infoCard) {
-    infoCard.style.borderLeftColor = secili.anaRenk;
+    infoCard.style.borderLeftColor = seciliSablon.anaRenk;
     infoCard.innerHTML = `
-      <div><strong>Grup #${secili.parcaNo}: ${secili.grupAdi}</strong> (${secili.sunumHaftasi}) — <strong>🪶 ${secili.bolgeAdi}</strong></div>
-      <div style="color:#cbd5e1; margin-top:3px;">👥 Üyeler: ${secili.uyeler.join(' • ')} | Dosya: <code>parcalar/${secili.kod}.json</code></div>
+      <div><strong>Grup #${seciliSablon.parcaNo}: ${seciliSablon.grupAdi}</strong> (${seciliSablon.sunumHaftasi}) — <strong>🪶 ${seciliSablon.bolgeAdi}</strong></div>
+      <div style="color:#cbd5e1; margin-top:3px;">👥 Üyeler: ${seciliSablon.uyeler.join(' • ')}</div>
+      <div style="color:#fde68a; margin-top:4px;">📂 Düzenlenecek Dosya: <code>parcalar/${seciliSablon.kod}.json</code> | 🌿 Dal: <code>grup/${seciliSablon.kod}</code></div>
     `;
   }
 
-  const ornekKod = {
-    parcaNo: secili.parcaNo,
-    kod: secili.kod,
-    grupAdi: secili.grupAdi,
-    bolgeAdi: secili.bolgeAdi,
-    bolgeKodu: secili.bolgeKodu,
-    aktif: true,
-    anaRenk: secili.anaRenk,
-    ikincilRenk: secili.ikincilRenk,
-    enerjiSeviyesi: 100,
-    mühür: secili.mühür,
-    mesaj: secili.mesaj
-  };
-
   const templateBox = document.getElementById('templateCodeBox');
   if (templateBox) {
-    templateBox.textContent = JSON.stringify(ornekKod, null, 2);
+    templateBox.textContent = JSON.stringify(seciliSablon, null, 2);
   }
-
-  const customMsgInp = document.getElementById('customCommitMsgInput');
-  if (customMsgInp) {
-    customMsgInp.value = secili.mesaj;
-  }
-}
-
-async function grupKodunuGonderVeDerle() {
-  const pasteArea = document.getElementById('codePasteArea');
-  const logBox = document.getElementById('compilerLogBox');
-  const customMsg = document.getElementById('customCommitMsgInput')?.value?.trim();
-
-  const hamMetin = (pasteArea?.value || '').trim();
-  if (!hamMetin) {
-    bildirimGoster('⚠️ Lütfen önce grubunuzun parça kodunu kutuya yapıştırın!');
-    return;
-  }
-
-  let girilenVeri;
-  try {
-    girilenVeri = JSON.parse(hamMetin);
-  } catch (err) {
-    if (logBox) {
-      logBox.innerHTML = `<span style="color:#f87171">❌ SÖZDİZİMİ HATASI: Yapıştırdığınız JSON kodunda eksik virgül veya tırnak var!\nDetay: ${err.message}</span>`;
-    }
-    bildirimGoster('❌ Kodda sözdizimi hatası var! Lütfen şablonu kontrol edin.');
-    return;
-  }
-
-  const hedefKod = girilenVeri.kod || seciliPortalGrupKod;
-  const hedefParca = parcalar.find((p) => p.kod === hedefKod);
-  if (!hedefParca) {
-    bildirimGoster('❌ Geçersiz grup kodu!');
-    return;
-  }
-
-  hedefParca.aktif = true;
-  if (girilenVeri.anaRenk) hedefParca.anaRenk = girilenVeri.anaRenk;
-  if (girilenVeri.ikincilRenk) hedefParca.ikincilRenk = girilenVeri.ikincilRenk;
-  if (customMsg) hedefParca.mesaj = customMsg;
-  else if (girilenVeri.mesaj) hedefParca.mesaj = girilenVeri.mesaj;
-
-  // Yerel Node.js sunucusu açıksa gerçek parcalar/<kod>.json dosyasına yaz ve derle
-  if (yerelSunucuAktif) {
-    try {
-      const res = await fetch('/api/parca-kaydet', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(hedefParca)
-      });
-      const sonuc = await res.json();
-      if (logBox && sonuc.derlemeCikti) {
-        logBox.textContent = sonuc.derlemeCikti;
-      }
-    } catch (_) {}
-  } else if (logBox) {
-    const aktifSayi = parcalar.filter((p) => p.aktif).length;
-    logBox.textContent = `✅ [DERLEME BAŞARILI] parcalar/${hedefParca.kod}.json doğrulandı!\n🔥 ${hedefParca.grupAdi} -> ${hedefParca.bolgeAdi} uyandırıldı! (${aktifSayi} / 10 Parça Aktif)`;
-  }
-
-  mistikSesCal('ignite');
-  sahneyiGuncelle();
-  bildirimGoster(`🔥 ${hedefParca.grupAdi} grubunun parçası (${hedefParca.bolgeAdi}) Zümrüdüanka ile birleşti!`);
-
-  setTimeout(() => {
-    portaliKapat();
-    const cx = window.innerWidth / 2;
-    const cy = window.innerHeight / 2;
-    patlamaKivilcimlariUret(cx, cy - 20, hedefParca.anaRenk, hedefParca.ikincilRenk, 110);
-    sokDalgalari.push({ x: cx, y: cy - 20, r: 10, maxR: 480, alfa: 0.95, renk: hedefParca.anaRenk });
-  }, 550);
 }
 
 // =========================================================================
-// SUNUCUDAN PARÇALARI OKU VE SENKRONİZE ET
+// GERÇEK DOSYALARI OKU (parcalar/*.json veya /api/parcalar)
 // =========================================================================
-async function sunucudanParcalariOku() {
-  if (window.location.protocol === 'file:') return;
-  try {
-    const res = await fetch(`/api/parcalar?t=${Date.now()}`, { cache: 'no-store' });
-    if (res.ok) {
-      const veri = await res.json();
-      if (veri && Array.isArray(veri.parcalar)) {
-        yerelSunucuAktif = true;
-        parcalar = veri.parcalar;
-        sahneyiGuncelle();
+async function gercekDosyalariOku(animasyonOynat = false) {
+  if (window.location.protocol !== 'file:') {
+    let okundu = false;
+    try {
+      const apiRes = await fetch(`/api/parcalar?t=${Date.now()}`, { cache: 'no-store' });
+      if (apiRes.ok) {
+        const veri = await apiRes.json();
+        if (veri && Array.isArray(veri.parcalar)) {
+          parcalar = veri.parcalar;
+          okundu = true;
+        }
+      }
+    } catch (_) {}
+
+    if (!okundu) {
+      for (let i = 0; i < parcalar.length; i++) {
+        const kod = parcalar[i].kod;
+        try {
+          const res = await fetch(`parcalar/${kod}.json?t=${Date.now()}`, { cache: 'no-store' });
+          if (res.ok) {
+            parcalar[i] = await res.json();
+          }
+        } catch (_) {}
       }
     }
-  } catch (_) {}
-}
-
-async function topluParcaDurumuAyarla(aktifMi) {
-  parcalar.forEach((p) => {
-    p.aktif = aktifMi;
-  });
-
-  if (yerelSunucuAktif) {
-    try {
-      await fetch('/api/toplu-durum', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ aktif: aktifMi })
-      });
-    } catch (_) {}
+  } else if (Array.isArray(window.DERLENEN_ANKA_PARCALARI)) {
+    parcalar = JSON.parse(JSON.stringify(window.DERLENEN_ANKA_PARCALARI));
   }
 
   sahneyiGuncelle();
-  if (aktifMi) {
+  if (animasyonOynat) {
     sinematikDogusAnimasyonuBaslat();
-    bildirimGoster('✨ Tüm 10 grubun kodları birleştirildi! Zümrüdüanka tam güçle uyandı!');
-  } else {
-    bildirimGoster('🌑 Zümrüdüanka küllerine döndü (0/10). Gruplar kodlarını gönderdikçe uyanacak!');
   }
 }
 
@@ -719,7 +625,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', canvasBoyutlandir);
   requestAnimationFrame(canvasDongusu);
 
-  // SVG parçalarının üzerine gelindiğinde bilgi göster
   document.querySelectorAll('.phoenix-part').forEach((el) => {
     const kod = el.getAttribute('data-grup');
     el.addEventListener('mouseenter', () => parcaVurgula(kod, true));
@@ -730,28 +635,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Üst Bar Butonları
-  document.getElementById('compileAndAwakenBtn')?.addEventListener('click', async () => {
-    if (yerelSunucuAktif) {
-      try {
-        await fetch('/api/derle');
-        await sunucudanParcalariOku();
-      } catch (_) {}
-    }
-    sinematikDogusAnimasyonuBaslat();
-    bildirimGoster('🔥 Proje derlendi ve Zümrüdüanka Küllerden Doğuş sekansı başlatıldı!');
+  document.getElementById('compileAndAwakenBtn')?.addEventListener('click', () => {
+    gercekDosyalariOku(true);
   });
 
   document.getElementById('togglePortalBtn')?.addEventListener('click', portaliAc);
   document.getElementById('closePortalBtn')?.addEventListener('click', portaliKapat);
-
-  document.getElementById('resetToAshesBtn')?.addEventListener('click', () => {
-    topluParcaDurumuAyarla(false);
-  });
-
-  document.getElementById('activateAllBtn')?.addEventListener('click', () => {
-    topluParcaDurumuAyarla(true);
-  });
 
   const soundBtn = document.getElementById('soundBtn');
   soundBtn?.addEventListener('click', () => {
@@ -759,7 +648,6 @@ document.addEventListener('DOMContentLoaded', () => {
     soundBtn.textContent = sesAcik ? '🔊' : '🔇';
   });
 
-  // Tam Ekran Sanat Modu (Zen Mode)
   document.getElementById('zenModeBtn')?.addEventListener('click', () => {
     document.body.classList.add('zen-mode');
     document.getElementById('exitZenBtn')?.classList.remove('hidden');
@@ -770,26 +658,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('exitZenBtn')?.classList.add('hidden');
   });
 
-  // Portal içi butonlar
   document.getElementById('copyTemplateCodeBtn')?.addEventListener('click', () => {
     const metin = document.getElementById('templateCodeBox')?.textContent || '';
     navigator.clipboard.writeText(metin);
-    bildirimGoster('📋 Grup parça kodu kopyalandı!');
+    bildirimGoster('📋 Grup parça kodu panoya kopyalandı!');
   });
 
-  document.getElementById('pasteToEditorBtn')?.addEventListener('click', () => {
-    const metin = document.getElementById('templateCodeBox')?.textContent || '';
-    const area = document.getElementById('codePasteArea');
-    if (area) area.value = metin;
-    bildirimGoster('⚡ Kod sağdaki yapıştırma alanına aktarıldı!');
-  });
-
-  document.getElementById('submitGroupCodeBtn')?.addEventListener('click', grupKodunuGonderVeDerle);
-
-  // İlk Sahne Kurulumu ve Doğuş Animasyonu
-  sahneyiGuncelle();
-  sunucudanParcalariOku();
-  setTimeout(() => {
-    sinematikDogusAnimasyonuBaslat();
-  }, 300);
+  gercekDosyalariOku(false);
 });

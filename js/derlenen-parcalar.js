@@ -1,7 +1,7 @@
 /**
  * OTOMATİK DERLENEN ZÜMRÜDÜANKA PARÇA VERİSİ
- * Son Derleme: 04.11.2026 01:08:41
- * Aktif Parça: 10 / 10
+ * Son Derleme: 04.11.2026 13:33:40
+ * Aktif Parça: 0 / 10
  */
 window.DERLENEN_ANKA_PARCALARI = [
   {
@@ -16,12 +16,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Anka'nın Kalbi ve Kor Çekirdeği",
     "bolgeKodu": "CORE_HEART",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#ff2a5f",
     "ikincilRenk": "#ffbe0b",
-    "enerjiSeviyesi": 100,
-    "mühür": "SUDO-CORE-01",
-    "mesaj": "Root yetkisiyle Anka'nın kalbine yaşam ateşi verildi!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. Sudo grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 2,
@@ -35,12 +35,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Asil Baş ve Altın Kraliyet Tacı",
     "bolgeKodu": "CROWN_HEAD",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#fbbf24",
     "ikincilRenk": "#fef08a",
-    "enerjiSeviyesi": 100,
-    "mühür": "ITCODE-CROWN-02",
-    "mesaj": "Bilgelik tacı ve keskin bakışlar kodlandı!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. IT Code grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 3,
@@ -54,12 +54,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Sol İç Kanat ve Alev Omuzları",
     "bolgeKodu": "LEFT_INNER_WING",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#f97316",
     "ikincilRenk": "#fde047",
-    "enerjiSeviyesi": 100,
-    "mühür": "ROTBALANCE-LWING-03",
-    "mesaj": "Sol iç kanat dengesi ve ateş kalkanı aktif!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. RotBalance grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 4,
@@ -73,12 +73,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Sağ İç Kanat ve Alev Omuzları",
     "bolgeKodu": "RIGHT_INNER_WING",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#fb923c",
     "ikincilRenk": "#fef9c3",
-    "enerjiSeviyesi": 100,
-    "mühür": "TDB-RWING-04",
-    "mesaj": "Sağ iç kanat senkronize edildi, yükseliş başlıyor!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. TDB grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 5,
@@ -92,12 +92,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Sol Güneş Telekleri (Dış Kanat)",
     "bolgeKodu": "LEFT_OUTER_FEATHERS",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#f59e0b",
     "ikincilRenk": "#fffbeb",
-    "enerjiSeviyesi": 100,
-    "mühür": "ITERSOLIS-SOLAR-05",
-    "mesaj": "Güneşin altın telekleri sol kanatta parlıyor!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. ITERSOLIS grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 6,
@@ -111,12 +111,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Sağ Yıldız Telekleri (Dış Kanat)",
     "bolgeKodu": "RIGHT_OUTER_FEATHERS",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#c084fc",
     "ikincilRenk": "#fde68a",
-    "enerjiSeviyesi": 100,
-    "mühür": "NOCTALIA-STAR-06",
-    "mesaj": "Gece yıldızlarının gücü sağ kanat teleklerinde!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. Noctalia grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 7,
@@ -130,12 +130,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Mistik Göğüs Zırhı ve Boyun Tüyleri",
     "bolgeKodu": "MYSTIC_ARMOR",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#ec4899",
     "ikincilRenk": "#fbcfe8",
-    "enerjiSeviyesi": 100,
-    "mühür": "404-ARMOR-07",
-    "mesaj": "404: Kusur Bulunamadı! Kristal göğüs zırhı tamamlandı!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. 404 grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 8,
@@ -149,12 +149,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Plazma Pençeler ve Ateş Dalgası",
     "bolgeKodu": "PLASMA_TALONS",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#06b6d4",
     "ikincilRenk": "#a5f3fc",
-    "enerjiSeviyesi": 100,
-    "mühür": "HAT-TALON-08",
-    "mesaj": "Plazma pençeler ve enerji halkaları ateşlendi!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. HAT grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 9,
@@ -168,12 +168,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Efsanevi Beşli Kuyruk Alevi",
     "bolgeKodu": "TAIL_RIBBONS",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#10b981",
     "ikincilRenk": "#fde047",
-    "enerjiSeviyesi": 100,
-    "mühür": "EIB-TAIL-09",
-    "mesaj": "Kuyruk telekleri rüzgarda alev şeritleri gibi dalgalanıyor!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. EIB grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 10,
@@ -187,12 +187,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Kutsal Güneş Halesi ve Takımyıldız Aurası",
     "bolgeKodu": "ASCENSION_HALO",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#6366f1",
     "ikincilRenk": "#fde047",
-    "enerjiSeviyesi": 100,
-    "mühür": "SOYTECH-HALO-10",
-    "mesaj": "10 grubu birbirine bağlayan kutsal yükseliş halesi tamamlandı!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. SOY Tech grubunun PR göndermesi bekleniyor..."
   }
 ];
-window.ANKA_DERLEME_ZAMANI = "01:08:41";
+window.ANKA_DERLEME_ZAMANI = "13:33:40";

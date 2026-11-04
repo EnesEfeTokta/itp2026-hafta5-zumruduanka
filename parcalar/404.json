@@ -10,10 +10,10 @@
   ],
   "bolgeAdi": "Mistik Göğüs Zırhı ve Boyun Tüyleri",
   "bolgeKodu": "MYSTIC_ARMOR",
-  "aktif": true,
+  "aktif": false,
   "anaRenk": "#ec4899",
   "ikincilRenk": "#fbcfe8",
-  "enerjiSeviyesi": 100,
-  "mühür": "404-ARMOR-07",
-  "mesaj": "404: Kusur Bulunamadı! Kristal göğüs zırhı tamamlandı!"
+  "enerjiSeviyesi": 0,
+  "mühür": "BEKLENIYOR",
+  "mesaj": "Bu parça henüz uyandırılmadı. 404 grubunun PR göndermesi bekleniyor..."
 }

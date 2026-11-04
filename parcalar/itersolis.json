@@ -10,10 +10,10 @@
   ],
   "bolgeAdi": "Sol Güneş Telekleri (Dış Kanat)",
   "bolgeKodu": "LEFT_OUTER_FEATHERS",
-  "aktif": true,
+  "aktif": false,
   "anaRenk": "#f59e0b",
   "ikincilRenk": "#fffbeb",
-  "enerjiSeviyesi": 100,
-  "mühür": "ITERSOLIS-SOLAR-05",
-  "mesaj": "Güneşin altın telekleri sol kanatta parlıyor!"
+  "enerjiSeviyesi": 0,
+  "mühür": "BEKLENIYOR",
+  "mesaj": "Bu parça henüz uyandırılmadı. ITERSOLIS grubunun PR göndermesi bekleniyor..."
 }

@@ -10,10 +10,10 @@
   ],
   "bolgeAdi": "Kutsal Güneş Halesi ve Takımyıldız Aurası",
   "bolgeKodu": "ASCENSION_HALO",
-  "aktif": true,
+  "aktif": false,
   "anaRenk": "#6366f1",
   "ikincilRenk": "#fde047",
-  "enerjiSeviyesi": 100,
-  "mühür": "SOYTECH-HALO-10",
-  "mesaj": "10 grubu birbirine bağlayan kutsal yükseliş halesi tamamlandı!"
+  "enerjiSeviyesi": 0,
+  "mühür": "BEKLENIYOR",
+  "mesaj": "Bu parça henüz uyandırılmadı. SOY Tech grubunun PR göndermesi bekleniyor..."
 }

@@ -10,10 +10,10 @@
   ],
   "bolgeAdi": "Sağ Yıldız Telekleri (Dış Kanat)",
   "bolgeKodu": "RIGHT_OUTER_FEATHERS",
-  "aktif": true,
+  "aktif": false,
   "anaRenk": "#c084fc",
   "ikincilRenk": "#fde68a",
-  "enerjiSeviyesi": 100,
-  "mühür": "NOCTALIA-STAR-06",
-  "mesaj": "Gece yıldızlarının gücü sağ kanat teleklerinde!"
+  "enerjiSeviyesi": 0,
+  "mühür": "BEKLENIYOR",
+  "mesaj": "Bu parça henüz uyandırılmadı. Noctalia grubunun PR göndermesi bekleniyor..."
 }

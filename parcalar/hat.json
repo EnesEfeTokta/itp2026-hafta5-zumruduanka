@@ -10,10 +10,10 @@
   ],
   "bolgeAdi": "Plazma Pençeler ve Ateş Dalgası",
   "bolgeKodu": "PLASMA_TALONS",
-  "aktif": true,
+  "aktif": false,
   "anaRenk": "#06b6d4",
   "ikincilRenk": "#a5f3fc",
-  "enerjiSeviyesi": 100,
-  "mühür": "HAT-TALON-08",
-  "mesaj": "Plazma pençeler ve enerji halkaları ateşlendi!"
+  "enerjiSeviyesi": 0,
+  "mühür": "BEKLENIYOR",
+  "mesaj": "Bu parça henüz uyandırılmadı. HAT grubunun PR göndermesi bekleniyor..."
 }

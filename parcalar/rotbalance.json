@@ -10,10 +10,10 @@
   ],
   "bolgeAdi": "Sol İç Kanat ve Alev Omuzları",
   "bolgeKodu": "LEFT_INNER_WING",
-  "aktif": true,
+  "aktif": false,
   "anaRenk": "#f97316",
   "ikincilRenk": "#fde047",
-  "enerjiSeviyesi": 100,
-  "mühür": "ROTBALANCE-LWING-03",
-  "mesaj": "Sol iç kanat dengesi ve ateş kalkanı aktif!"
+  "enerjiSeviyesi": 0,
+  "mühür": "BEKLENIYOR",
+  "mesaj": "Bu parça henüz uyandırılmadı. RotBalance grubunun PR göndermesi bekleniyor..."
 }
