@@ -1,7 +1,7 @@
 /**
  * OTOMATİK DERLENEN ZÜMRÜDÜANKA PARÇA VERİSİ
- * Son Derleme: 05.11.2026 02:04:27
- * Aktif Parça: 1 / 10
+ * Son Derleme: 05.11.2026 02:08:34
+ * Aktif Parça: 0 / 10
  */
 window.DERLENEN_ANKA_PARCALARI = [
   {
@@ -16,12 +16,12 @@ window.DERLENEN_ANKA_PARCALARI = [
     ],
     "bolgeAdi": "Anka'nın Kalbi ve Kor Çekirdeği",
     "bolgeKodu": "CORE_HEART",
-    "aktif": true,
+    "aktif": false,
     "anaRenk": "#ff2a5f",
     "ikincilRenk": "#ffbe0b",
-    "enerjiSeviyesi": 100,
-    "mühür": "SUDO-KOR-ATESI-AKTIF",
-    "mesaj": "Sudo grubu Anka'nın Kalbini ve Kor Çekirdeğini ateşledi!"
+    "enerjiSeviyesi": 0,
+    "mühür": "BEKLENIYOR",
+    "mesaj": "Bu parça henüz uyandırılmadı. Sudo grubunun PR göndermesi bekleniyor..."
   },
   {
     "parcaNo": 2,
@@ -195,4 +195,4 @@ window.DERLENEN_ANKA_PARCALARI = [
     "mesaj": "Bu parça henüz uyandırılmadı. SOY Tech grubunun PR göndermesi bekleniyor..."
   }
 ];
-window.ANKA_DERLEME_ZAMANI = "02:04:27";
+window.ANKA_DERLEME_ZAMANI = "02:08:34";
