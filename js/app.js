@@ -628,8 +628,15 @@ async function gercekDosyalariOku(animasyonOynat = false, sessizKontrol = false)
         return bosVeriSablonuUret(sablon);
       }
       const parsed = JSON.parse(ham);
-      if (typeof parsed.aktif === 'boolean' && parsed.grupAdi) {
-        return parsed;
+      if (typeof parsed.aktif === 'boolean') {
+        // Dosya adına göre grup kimliğini koru (yanlış grubun kodu yapıştırılsa bile mükerrer kart oluşmasın!)
+        return {
+          ...sablon,
+          aktif: parsed.aktif,
+          enerjiSeviyesi: parsed.aktif ? 100 : 0,
+          mühür: parsed.mühür || sablon.mühür,
+          mesaj: parsed.kod === sablon.kod && parsed.mesaj ? parsed.mesaj : sablon.mesaj
+        };
       }
       return bosVeriSablonuUret(sablon);
     });

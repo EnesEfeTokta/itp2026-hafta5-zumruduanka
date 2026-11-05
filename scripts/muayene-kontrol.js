@@ -242,6 +242,16 @@ for (let i = 0; i < BEKLENEN_PARCALAR.length; i++) {
       hataSayisi++;
       continue;
     }
+
+    // Eğer bir grup kendi dosyasına yanlışlıkla başka bir grubun JSON kodunu yapıştırdıysa,
+    // mükerrer grup oluşmaması için kimlik bilgilerini dosya adındaki şablona sabitle:
+    if (veri.kod !== sablon.kod) {
+      console.warn(`⚠️ [UYARI] parcalar/${dosyaAdi} içine "${veri.grupAdi}" kodu yapıştırılmış; "${sablon.grupAdi}" kimliği korundu.`);
+      veri = {
+        ...aktifVeriUret(sablon),
+        aktif: Boolean(veri.aktif)
+      };
+    }
   }
 
   derlenenListe.push(veri);
