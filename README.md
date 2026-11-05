@@ -7,6 +7,19 @@
 
 ---
 
+## 📷 SINIF İÇİ UYGULAMA QR KODU (Telefon Kamerasıyla Okutun)
+
+<p align="center">
+  <a href="https://github.com/Faruk-T/itp2026-hafta5-zumruduanka">
+    <img src="./repo-qr-kod.png" alt="GitHub Repo QR Kodu" width="240" height="240" />
+  </a>
+  <br/>
+  <strong>🔗 Depo Adresi:</strong> <a href="https://github.com/Faruk-T/itp2026-hafta5-zumruduanka">https://github.com/Faruk-T/itp2026-hafta5-zumruduanka</a><br/>
+  <strong>🔥 Canlı Zümrüdüanka Sahnesi:</strong> <a href="https://faruk-t.github.io/itp2026-hafta5-zumruduanka/">https://faruk-t.github.io/itp2026-hafta5-zumruduanka/</a>
+</p>
+
+---
+
 ## 📱 TELEFONDAN GİREN GRUPLAR İÇİN HIZLI BAŞLANGIÇ
 
 👉 **[BURAYA DOKUNARAK 10 GRUBUN KODLARINI VE TELEFON REHBERİNİ AÇIN (`GRUP_KODLARI_VE_TELEFON_REHBERI.md`)](./GRUP_KODLARI_VE_TELEFON_REHBERI.md)**

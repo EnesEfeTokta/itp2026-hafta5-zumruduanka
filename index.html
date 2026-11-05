@@ -36,7 +36,7 @@
       </button>
 
       <button class="btn btn-portal" id="togglePortalBtn">
-        📱 Telefondan PR Rehberi &amp; 10 Grup Kodu
+        📱 QR Kod • PR Rehberi &amp; 10 Grup Kodu
       </button>
 
       <button class="btn btn-ghost" id="soundBtn" title="Mistik Ses Efektlerini Aç/Kapat">
@@ -292,24 +292,30 @@
       </div>
 
       <div class="portal-body">
-        <!-- Sol: Telefondan 5 Adımda Nasıl Yapılır? -->
+        <!-- Sol: QR Kod ve Telefondan 5 Adımda Nasıl Yapılır? -->
         <div class="portal-left">
-          <div class="section-label">📱 Telefondan 5 Adımda Branch &amp; PR Nasıl Açılır?</div>
-          <div class="selected-group-card" style="margin-bottom: 10px; line-height: 1.55;">
-            <strong>1️⃣ Kodu Kopyala:</strong> Telefondan GitHub depomuza girin, <code>GRUP_KODLARI_VE_TELEFON_REHBERI.md</code> dosyasını açıp grubunuzun kodunun sağ üstündeki <strong>📋 Copy</strong> tuşuna dokunun.<br/><br/>
-            <strong>2️⃣ Dosyanı Aç:</strong> Depoda <code>parcalar/</code> klasörüne girip kendi grubunuzun dosyasına (<code id="guideFileName">parcalar/sudo.json</code>) dokunun.<br/><br/>
-            <strong>3️⃣ Kalem (✏️) Simgesine Dokun:</strong> Sağ üstteki <strong>✏️ (Edit)</strong> simgesine dokunun, içindeki eski <code>"aktif": false</code> yazısını silip kopyaladığınız kodu <strong>Yapıştırın</strong>.<br/><br/>
-            <strong>4️⃣ Yeni Branch (Dal) Seç &amp; Commit At:</strong> Yeşil <strong>"Commit changes..."</strong> tuşuna basın:<br/>
-            • Commit mesajı: <code id="guideCommitMsg">ozellik(sudo): anka kalbi uyandirildi</code><br/>
-            • Alttan <strong>🔘 Create a new branch for this commit and start a pull request</strong> seçeneğini seçip dal adına <code id="guideBranchName">grup/sudo</code> yazın.<br/><br/>
-            <strong>5️⃣ PR Gönder:</strong> Yeşil <strong>"Propose changes"</strong> → <strong>"Create pull request"</strong> tuşuna basın! (GitHub Actions otomatik test edecek!)
+          <div class="selected-group-card" style="margin-bottom: 10px; display: flex; align-items: center; gap: 14px; border-left-color: #fbbf24; background: rgba(15, 23, 42, 0.92);">
+            <img src="repo-qr-kod.png" alt="GitHub Repo QR Kodu" style="width: 128px; height: 128px; border-radius: 10px; border: 2px solid #fbbf24; background: #fff; flex-shrink: 0;" />
+            <div style="line-height: 1.45;">
+              <div style="color: #fbbf24; font-weight: 800; font-size: 0.95rem;">📷 TELEFON KAMERASIYLA QR KODU OKUTUN</div>
+              <div style="font-size: 0.8rem; color: #e2e8f0; margin-top: 4px;">
+                Doğrudan GitHub depomuzu açar:<br/>
+                <a href="https://github.com/Faruk-T/itp2026-hafta5-zumruduanka" target="_blank" style="color: #38bdf8; word-break: break-all;">https://github.com/Faruk-T/itp2026-hafta5-zumruduanka</a>
+              </div>
+            </div>
           </div>
 
-          <div class="selected-group-card" style="border-left-color: #10b981; line-height: 1.5;">
-            <strong>💻 Sunucu Ekibi (Nohut Dürüm) PR'ları Nasıl Derler?</strong><br/>
-            Gruplar PR gönderdikten sonra GitHub'da <strong>Merge pull request</strong> yapın, ardından VS Code terminalinde:<br/>
-            <code>git pull &amp;&amp; npm run derle</code><br/>
-            komutunu çalıştırıp bu sayfayı yenileyin!
+          <div class="section-label">📱 Telefondan Adım Adım Fork, Branch &amp; PR Açma:</div>
+          <div class="selected-group-card" style="margin-bottom: 10px; line-height: 1.52;">
+            <strong>1️⃣ QR Kodu Okut &amp; Kodu Kopyala:</strong> Depoda <code>GRUP_KODLARI_VE_TELEFON_REHBERI.md</code> içinden grubunuzun kodunu kopyalayın.<br/>
+            <strong>2️⃣ Dosyanı Aç &amp; Forkla:</strong> <code>parcalar/</code> klasöründen <code id="guideFileName">parcalar/sudo.json</code> dosyasını açıp <strong>✏️ Edit</strong> (veya yeşil <strong>Fork this repository</strong>) butonuna basın.<br/>
+            <strong>3️⃣ Kodu Yapıştır:</strong> İçindeki <code>{}</code> işaretini silip grubunuzun kodunu yapıştırın.<br/>
+            <strong>4️⃣ Commit &amp; PR Gönder:</strong> Yeşil <strong>"Commit changes..."</strong> (<code id="guideCommitMsg">ozellik(sudo): anka parcasi uyandirildi</code>, dal: <code id="guideBranchName">grup/sudo</code>) → <strong>"Propose changes"</strong> → <strong>"Create pull request"</strong> butonuna basın!
+          </div>
+
+          <div class="selected-group-card" style="border-left-color: #10b981; line-height: 1.45;">
+            <strong>⚡ Canlı Otomatik Algılama Aktif!</strong><br/>
+            Siz GitHub'da PR'ı <strong>Merge pull request</strong> yaptığınız saniye, bu ekran 4 saniye içinde <strong>otomatik olarak</strong> o grubun Zümrüdüanka parçasını ateşler!
           </div>
         </div>
 
